@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'HelloFB'
+            keyPassword 'conduongmua'
+            storeFile file('C:/Users/Backup/.android/debug.keystore')
+            storePassword 'conduongmua'
+        }
+    }
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+    defaultConfig {
+        applicationId "findlover.simplethird.vmcop.com.findlover"
+        minSdkVersion 9
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+repositories { mavenCentral() }
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.2.0'
+    compile files('C:/androidapp/FindLover/libraries/picasso-2.5.2.jar')
+}
