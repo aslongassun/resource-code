@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 5 elements from project &apos;FindLover&apos;&#x0D;&#x0A;- Original project: &apos;FindLover&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     drawable-hdpi&#x0D;&#x0A;     drawable-ldpi&#x0D;&#x0A;     drawable-mdpi&#x0D;&#x0A;     drawable-xhdpi&#x0D;&#x0A;     drawable-xxhdpi" description="Delete elements" element1="res/drawable-hdpi" element2="res/drawable-xxhdpi" element3="res/drawable-mdpi" element4="res/drawable-xhdpi" element5="res/drawable-ldpi" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="5" stamp="1435230142337" subPackages="false" version="1.0"/>
+</session>
