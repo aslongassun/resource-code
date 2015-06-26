@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/WdWKH-I3Ua3g5azYf_dd1O3S39c\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/ly6OCBoUkc0QC2hzDEQ9lZKmvfs\"",
  "discoveryVersion": "v1",
  "id": "profileinfoendpoint:v1",
  "name": "profileinfoendpoint",
@@ -14,8 +14,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://myapp.appspot.com/_ah/api/",
- "rpcUrl": "https://myapp.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://findloverapp.appspot.com/_ah/api/",
+ "rpcUrl": "https://findloverapp.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -95,6 +95,9 @@
      "type": "string"
     },
     "profileId": {
+     "type": "string"
+    },
+    "urlImageProfile": {
      "type": "string"
     },
     "userAge": {

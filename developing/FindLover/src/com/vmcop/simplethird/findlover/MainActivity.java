@@ -166,6 +166,7 @@ public class MainActivity extends Activity {
                         profileInfo.setUserSex(object.optString(ConstantValue.MY_SEX));
                         profileInfo.setBirthday(object.optString(ConstantValue.MY_BIRTHDAY));
                         profileInfo.setUserAge(calculateAgeFromBirthDay(object.optString(ConstantValue.MY_BIRTHDAY)));
+                        profileInfo.setUrlImageProfile(Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString());
                         //------------------------//
                         new ProfileInfoTask().execute();
                         //------------------------//
@@ -286,7 +287,7 @@ public class MainActivity extends Activity {
     }
     
     private void matchLove(){
-    	
+    	setImageProfileForImageView(listProfileInfo.get(0).getUrlImageProfile(),(ImageView)findViewById(R.id.Love));
     }
     
     //====================================//

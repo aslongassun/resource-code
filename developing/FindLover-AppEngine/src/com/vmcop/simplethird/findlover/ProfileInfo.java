@@ -17,6 +17,7 @@ public class ProfileInfo {
     private String userName;
     private String userSex;
     private String birthday;
+    private String urlImageProfile;
     private Integer userAge;
 	public String getProfileId() {
 		return profileId;
@@ -47,5 +48,11 @@ public class ProfileInfo {
 	}
 	public void setUserAge(Integer userAge) {
 		this.userAge = userAge;
+	}
+	public String getUrlImageProfile() {
+		return urlImageProfile;
+	}
+	public void setUrlImageProfile(String urlImageProfile) {
+		this.urlImageProfile = urlImageProfile;
 	}
 }
