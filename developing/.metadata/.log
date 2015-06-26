@@ -1851,3 +1851,40 @@ Caused by: java.lang.IllegalArgumentException: Logging bundle must not be null.
 	at org.eclipse.core.runtime.Platform.getLog(Platform.java:1017)
 	at com.google.gdt.eclipse.platform.jetty.JettyEclipseLogger.<clinit>(JettyEclipseLogger.java:35)
 	... 20 more
+!SESSION 2015-06-26 15:00:26.796 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.7.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-06-26 15:01:15.453
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Backup'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-06-26 15:38:50.383
+!MESSAGE Sending POST request to Analytics: {cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, ea=GENERATE_GAE_BACKEND, cid=1434624897397, ec=com.google.gdt.eclipse.appengine.swarm, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=DA39A3EE5E6B4B0D3255BFEF95601890AFD80709&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-06-26 15:38:50.401
+!MESSAGE Analytics ping request parameters: cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&ea=GENERATE_GAE_BACKEND&cid=1434624897397&ec=com.google.gdt.eclipse.appengine.swarm&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3DDA39A3EE5E6B4B0D3255BFEF95601890AFD80709%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-06-26 15:38:50.742
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY org.eclipse.wst.common.project.facet.core 4 0 2015-06-26 15:38:53.078
+!MESSAGE Project facet wst.jsdt.web has not been defined. It is used in plugin org.eclipse.jst.server.core.
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-06-26 15:53:18.893
+!MESSAGE Sending POST request to Analytics: {cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, ea=GENERATE_ENDPOINT_CLASS, cid=1434624897397, ec=com.google.gdt.eclipse.appengine.swarm, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=DA39A3EE5E6B4B0D3255BFEF95601890AFD80709&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-06-26 15:53:18.894
+!MESSAGE Analytics ping request parameters: cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&ea=GENERATE_ENDPOINT_CLASS&cid=1434624897397&ec=com.google.gdt.eclipse.appengine.swarm&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3DDA39A3EE5E6B4B0D3255BFEF95601890AFD80709%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-06-26 15:53:19.063
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
