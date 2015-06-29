@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="android.os.AsyncTask"/>
+<fullyQualifiedTypeName name="com.vmcop.simplethird.findlover.profileinfoendpoint.model.ProfileInfo"/>
+<fullyQualifiedTypeName name="com.vmcop.simplethird.findlover.profileinfoendpoint.Profileinfoendpoint"/>
+<fullyQualifiedTypeName name="com.google.api.client.extensions.android.http.AndroidHttp"/>
+<fullyQualifiedTypeName name="com.google.api.client.json.jackson2.JacksonFactory"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="com.vmcop.simplethird.findlover.profileinfoendpoint.model.CollectionResponseProfileInfo"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.facebook.Profile"/>
 </qualifiedTypeNameHistroy>

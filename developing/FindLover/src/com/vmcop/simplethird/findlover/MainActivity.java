@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +54,8 @@ public class MainActivity extends Activity {
 	ProfileInfo profileInfo;
 	
 	List<ProfileInfo> listProfileInfo;
+	
+	Integer loverIndex;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,8 @@ public class MainActivity extends Activity {
                 findLoveAction();
             }
         });
+        
+        
     }
 
     private void initData(){
@@ -122,10 +127,20 @@ public class MainActivity extends Activity {
     private void doAfterLoginSuccess(LoginResult loginResult){
         Log.d(TAG, "Login Success!");
         Profile currProfile = Profile.getCurrentProfile();
-        Log.d(TAG, "ProfileName" + currProfile.getName());
         // Set Image vao ImageView ImageView yourImageView = (ImageView)findViewById(R.id.You);
         setImageProfileForImageView(currProfile.getProfilePictureUri(500, 500).toString(),(ImageView)findViewById(R.id.You));
-        Log.d(TAG, "ProfileUrl" + currProfile.getProfilePictureUri(500, 500).toString());
+        
+        //
+        // Click on Imageview
+        final ImageView imageViewYou = (ImageView) findViewById(R.id.You);
+        imageViewYou.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	Log.d(TAG, "show url");
+            	Uri uri = Uri.parse("https://facebook.com/" + Profile.getCurrentProfile().getId());
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
+        
         requestGraphData(loginResult);
 
 
@@ -148,6 +163,7 @@ public class MainActivity extends Activity {
                             GraphResponse response) {
                         Log.d(TAG, "object:" + object.toString());
                         //----------TODO----------//
+                        /*
                         // Save xuong data cua may
                         SharedPreferences mySharedPreferencesInfo = getSharedPreferences(ConstantValue.PREFS_NAME, 0);
                         SharedPreferences.Editor editor = mySharedPreferencesInfo.edit();
@@ -160,6 +176,9 @@ public class MainActivity extends Activity {
                         // currProfile.getProfilePictureUri(500, 500).toString()
                         
                         editor.commit();
+                        */
+                        //------------------------//
+                        
                         //------------------------//
                         profileInfo.setProfileId(object.optString(ConstantValue.MY_PROFILE_ID));
                         profileInfo.setUserName(object.optString(ConstantValue.MY_NAME));
@@ -174,7 +193,7 @@ public class MainActivity extends Activity {
                 }
         );
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,gender,birthday");
+        parameters.putString("fields", "id,name,gender,birthday,locale");
         request.setParameters(parameters);
         request.executeAsync();
     }
@@ -270,6 +289,7 @@ public class MainActivity extends Activity {
         try {
           result = endpoint.listProfileInfo().execute();
         } catch (IOException e) {
+          Log.d(TAG, "IOException:" + e.getMessage());
           // TODO Auto-generated catch block
           e.printStackTrace();
           result = null;
@@ -280,14 +300,29 @@ public class MainActivity extends Activity {
       @Override
       protected void onPostExecute(CollectionResponseProfileInfo result) {
     	  listProfileInfo = result.getItems();
-    	  Log.d(TAG, "onPostExecute_listProfileInfo:" + listProfileInfo.size());
     	  matchLove();
       }
       
     }
     
     private void matchLove(){
-    	setImageProfileForImageView(listProfileInfo.get(0).getUrlImageProfile(),(ImageView)findViewById(R.id.Love));
+    	loverIndex = 0;
+    	for(Integer i = 0; i < listProfileInfo.size(); i++){
+    		if(listProfileInfo.get(i).getUserSex().equalsIgnoreCase("female")){
+    			loverIndex = i;
+    			break;
+    		}
+    	}
+    	setImageProfileForImageView(listProfileInfo.get(loverIndex).getUrlImageProfile(),(ImageView)findViewById(R.id.Love));
+    	// Click on Imageview
+        final ImageView imageViewYou = (ImageView) findViewById(R.id.Love);
+        imageViewYou.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	Log.d(TAG, "show url");
+            	Uri uri = Uri.parse("https://facebook.com/" + listProfileInfo.get(loverIndex).getProfileId());
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
     }
     
     //====================================//

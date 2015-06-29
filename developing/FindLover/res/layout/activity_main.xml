@@ -26,6 +26,7 @@
             android:layout_height="150dp"
             android:paddingRight="5dp"
             android:src="@drawable/profile"
+            android:clickable="true"
             android:scaleType="fitXY"/>
 
         <ImageView
@@ -34,6 +35,7 @@
             android:layout_height="150dp"
             android:paddingLeft="5dp"
             android:src="@drawable/profile"
+            android:clickable="true"
             android:scaleType="fitXY"/>
 
     </LinearLayout>

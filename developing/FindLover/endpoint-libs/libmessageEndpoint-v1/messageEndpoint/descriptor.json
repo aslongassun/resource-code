@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/messageEndpoint/v1/20150626111443/java/1.18.0-rc/vmcop.com-messageEndpoint-v1-20150626111443-java-1.18.0-rc-sources.jar", 
-      "path": "vmcop.com-messageEndpoint-v1-20150626111443-java-1.18.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/messageEndpoint/v1/20150629110538/java/1.18.0-rc/vmcop.com-messageEndpoint-v1-20150629110538-java-1.18.0-rc-sources.jar", 
+      "path": "vmcop.com-messageEndpoint-v1-20150629110538-java-1.18.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2015-06-26 11:14"
+      "timestamp": "2015-06-29 11:05"
     }, 
     {
-      "path": "vmcop.com-messageEndpoint-v1-20150626111443-java-1.18.0-rc.jar.properties", 
+      "path": "vmcop.com-messageEndpoint-v1-20150629110538-java-1.18.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -675,5 +675,5 @@
   "packagePath": "simplethird.findlover", 
   "language_version": "1.18.0-rc", 
   "id": "messageEndpoint:v1", 
-  "revision": 20150626111443
+  "revision": 20150629110538
 }
