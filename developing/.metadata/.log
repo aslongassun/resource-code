@@ -3771,3 +3771,29 @@ Caused by: com.google.api.server.spi.config.validation.MissingParameterNameExcep
 !ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 15:45:32.199
 !MESSAGE Analytics ping response: 200: OK
 GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.appengine.eclipse.core 1 0 2015-07-01 16:14:24.579
+!MESSAGE FindLover-AppEngine successfully deployed to Google App Engine
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 16:14:24.697
+!MESSAGE Sending POST request to Analytics: {cd7=NOT_USED, cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19, ea=DEPLOY_GAE, cid=1434624897397, cd9=false, ec=com.google.gdt.eclipse.core, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 16:14:24.698
+!MESSAGE Analytics ping request parameters: cd7=NOT_USED&cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&ea=DEPLOY_GAE&cid=1434624897397&cd9=false&ec=com.google.gdt.eclipse.core&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 16:14:24.827
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.appengine.eclipse.core 1 0 2015-07-01 16:19:55.346
+!MESSAGE FindLover-AppEngine successfully deployed to Google App Engine
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 16:19:55.447
+!MESSAGE Sending POST request to Analytics: {cd7=NOT_USED, cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19, ea=DEPLOY_GAE, cid=1434624897397, cd9=false, ec=com.google.gdt.eclipse.core, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 16:19:55.448
+!MESSAGE Analytics ping request parameters: cd7=NOT_USED&cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&ea=DEPLOY_GAE&cid=1434624897397&cd9=false&ec=com.google.gdt.eclipse.core&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 16:19:55.599
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;

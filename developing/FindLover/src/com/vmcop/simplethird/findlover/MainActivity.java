@@ -303,6 +303,10 @@ public class MainActivity extends Activity {
       // If you want the UI to wait until the task returns, use a ProgressDialog in the onPreExecute and onPostExecute methods.
       @Override
       protected void onPostExecute(CollectionResponseProfileInfo result) {
+    	  if(result == null){
+    		  Log.d(TAG, "==List data from server is null==");
+    		  return;
+    	  }
     	  listProfileInfo = result.getItems();
     	  matchLove();
       }
