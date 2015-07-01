@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="356" key="DIALOG_Y_ORIGIN"/>
-		<item value="695" key="DIALOG_X_ORIGIN"/>
+		<item value="196" key="DIALOG_Y_ORIGIN"/>
+		<item value="854" key="DIALOG_X_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="setImageProfileForImageView" key="selection"/>
+		<item value="containsProfileInfo" key="selection"/>
 		<list key="findhistory">
-			<item value="setImageProfileForImageView"/>
-			<item value="requestGraphData"/>
-			<item value="getProfileInfo"/>
 			<item value="containsProfileInfo"/>
-			<item value="profileInfo"/>
-			<item value="initData"/>
-			<item value="jsonReturn"/>
-			<item value="LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID"/>
+			<item value="persist"/>
+			<item value="locale"/>
+			<item value="oncomplete"/>
+			<item value="key"/>
+			<item value="link"/>
+			<item value="listProfileInfo"/>
+			<item value="setImageProfileForImageView"/>
 		</list>
 		<list key="replacehistory">
 		</list>

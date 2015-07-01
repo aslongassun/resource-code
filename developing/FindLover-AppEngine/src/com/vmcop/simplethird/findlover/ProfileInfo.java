@@ -1,30 +1,30 @@
 package com.vmcop.simplethird.findlover;
 
-import com.google.appengine.api.datastore.Key;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.google.appengine.api.datastore.Key;
+
 @Entity
 public class ProfileInfo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Key key;
-    private String profileId;
-    private String userName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Key key;
+	
+	private String fuid;
+	private String userName;
     private String userSex;
     private String birthday;
     private String urlImageProfile;
-    private Integer userAge;
-	public String getProfileId() {
-		return profileId;
-	}
-	public void setProfileId(String profileId) {
-		this.profileId = profileId;
-	}
+    private String locale;
+    
+    public Key getKey() {
+        return key;
+    }
+    
 	public String getUserName() {
 		return userName;
 	}
@@ -43,16 +43,24 @@ public class ProfileInfo {
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	public Integer getUserAge() {
-		return userAge;
-	}
-	public void setUserAge(Integer userAge) {
-		this.userAge = userAge;
-	}
 	public String getUrlImageProfile() {
 		return urlImageProfile;
 	}
 	public void setUrlImageProfile(String urlImageProfile) {
 		this.urlImageProfile = urlImageProfile;
+	}
+	public String getLocale() {
+		return locale;
+	}
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getFuid() {
+		return fuid;
+	}
+
+	public void setFuid(String fuid) {
+		this.fuid = fuid;
 	}
 }

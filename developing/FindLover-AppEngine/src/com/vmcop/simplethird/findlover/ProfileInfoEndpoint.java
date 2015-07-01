@@ -1,6 +1,13 @@
 package com.vmcop.simplethird.findlover;
 
-import com.vmcop.simplethird.findlover.EMF;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -8,15 +15,6 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
-
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.inject.Named;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 @Api(name = "profileinfoendpoint", namespace = @ApiNamespace(ownerDomain = "vmcop.com", ownerName = "vmcop.com", packagePath = "simplethird.findlover"))
 public class ProfileInfoEndpoint {
@@ -69,6 +67,23 @@ public class ProfileInfoEndpoint {
 				.setNextPageToken(cursorString).build();
 	}
 
+	//============================
+	@SuppressWarnings({ "unchecked", "unused" })
+	private List<ProfileInfo> findProfileInfoByFUID(String inFuid) {
+		EntityManager mgr = getEntityManager();
+		List<ProfileInfo> lprofileInfo = new ArrayList<ProfileInfo>();
+		try {
+			Query query = mgr
+					.createQuery("SELECT c FROM ProfileInfo c WHERE c.fuid = :inFuid")
+					.setParameter("inFuid", inFuid);
+			lprofileInfo = (List<ProfileInfo>) query.getResultList();
+		} finally {
+			mgr.close();
+		}
+		return lprofileInfo;
+	}
+	//============================
+	
 	/**
 	 * This method gets the entity having primary key id. It uses HTTP GET method.
 	 *
@@ -99,10 +114,13 @@ public class ProfileInfoEndpoint {
 	public ProfileInfo insertProfileInfo(ProfileInfo profileinfo) {
 		EntityManager mgr = getEntityManager();
 		try {
-			if (containsProfileInfo(profileinfo)) {
+			/*if (containsProfileInfo(profileinfo)) {
 				throw new EntityExistsException("Object already exists");
+			}*/
+			List<ProfileInfo> listProfileInfo = findProfileInfoByFUID(profileinfo.getFuid());
+			if(listProfileInfo.isEmpty()){
+				mgr.persist(profileinfo);
 			}
-			mgr.persist(profileinfo);
 		} finally {
 			mgr.close();
 		}
@@ -153,7 +171,7 @@ public class ProfileInfoEndpoint {
 		boolean contains = true;
 		try {
 			ProfileInfo item = mgr
-					.find(ProfileInfo.class, profileinfo.getProfileId());
+					.find(ProfileInfo.class, profileinfo.getKey());
 			if (item == null) {
 				contains = false;
 			}

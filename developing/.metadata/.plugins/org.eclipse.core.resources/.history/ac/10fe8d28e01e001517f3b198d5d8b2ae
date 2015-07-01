@@ -1,0 +1,50 @@
+package com.vmcop.simplethird.findlover;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import com.google.appengine.api.datastore.Key;
+
+@Entity
+public class ProfileInfo {
+
+    @Id
+    private String fbUID;
+    
+	private String userName;
+    private String userSex;
+    private String birthday;
+    private String urlImageProfile;
+    private String locale;
+    
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserSex() {
+		return userSex;
+	}
+	public void setUserSex(String userSex) {
+		this.userSex = userSex;
+	}
+	public String getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+	public String getUrlImageProfile() {
+		return urlImageProfile;
+	}
+	public void setUrlImageProfile(String urlImageProfile) {
+		this.urlImageProfile = urlImageProfile;
+	}
+	public String getLocale() {
+		return locale;
+	}
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+}

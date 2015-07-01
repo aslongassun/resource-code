@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/ly6OCBoUkc0QC2hzDEQ9lZKmvfs\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/uRYYTjAXs0q3TIM9YueOa5RMna8\"",
  "discoveryVersion": "v1",
  "id": "profileinfoendpoint:v1",
  "name": "profileinfoendpoint",
@@ -89,6 +89,34 @@
     }
    }
   },
+  "Key": {
+   "id": "Key",
+   "type": "object",
+   "properties": {
+    "appId": {
+     "type": "string"
+    },
+    "complete": {
+     "type": "boolean"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "namespace": {
+     "type": "string"
+    },
+    "parent": {
+     "$ref": "Key"
+    }
+   }
+  },
   "ProfileInfo": {
    "id": "ProfileInfo",
    "type": "object",
@@ -96,15 +124,17 @@
     "birthday": {
      "type": "string"
     },
-    "profileId": {
+    "fuid": {
+     "type": "string"
+    },
+    "key": {
+     "$ref": "Key"
+    },
+    "locale": {
      "type": "string"
     },
     "urlImageProfile": {
      "type": "string"
-    },
-    "userAge": {
-     "type": "integer",
-     "format": "int32"
     },
     "userName": {
      "type": "string"

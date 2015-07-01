@@ -1,9 +1,9 @@
 package com.vmcop.simplethird.findlover;
 
 import java.io.IOException;
+import java.security.KeyFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -12,7 +12,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -128,9 +127,8 @@ public class MainActivity extends Activity {
         Log.d(TAG, "Login Success!");
         Profile currProfile = Profile.getCurrentProfile();
         // Set Image vao ImageView ImageView yourImageView = (ImageView)findViewById(R.id.You);
-        setImageProfileForImageView(currProfile.getProfilePictureUri(500, 500).toString(),(ImageView)findViewById(R.id.You));
+        setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You));
         
-        //
         // Click on Imageview
         final ImageView imageViewYou = (ImageView) findViewById(R.id.You);
         imageViewYou.setOnClickListener(new View.OnClickListener() {
@@ -179,13 +177,14 @@ public class MainActivity extends Activity {
                         */
                         //------------------------//
                         
+                        
                         //------------------------//
-                        profileInfo.setProfileId(object.optString(ConstantValue.MY_PROFILE_ID));
+                        profileInfo.setFuid(object.optString(ConstantValue.MY_PROFILE_ID));
                         profileInfo.setUserName(object.optString(ConstantValue.MY_NAME));
                         profileInfo.setUserSex(object.optString(ConstantValue.MY_SEX));
                         profileInfo.setBirthday(object.optString(ConstantValue.MY_BIRTHDAY));
-                        profileInfo.setUserAge(calculateAgeFromBirthDay(object.optString(ConstantValue.MY_BIRTHDAY)));
-                        profileInfo.setUrlImageProfile(Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString());
+                        profileInfo.setUrlImageProfile(buildImageProfileUrlFromUID(object.optString(ConstantValue.MY_PROFILE_ID)));
+                        profileInfo.setLocale(object.optString(ConstantValue.MY_LOCALE));
                         //------------------------//
                         new ProfileInfoTask().execute();
                         //------------------------//
@@ -194,10 +193,25 @@ public class MainActivity extends Activity {
         );
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,gender,birthday,locale");
+        //parameters.putString("fields", "id,name,gender,birthday,locale,location,timezone,address,languages");
         request.setParameters(parameters);
         request.executeAsync();
     }
-
+    
+    private String buildImageProfileUrlFromUID(String inUID){
+    	if(inUID == null || inUID == ""){
+    		showErrorMessage("inUID is Blank!");
+    		return "";
+    	}
+    	String resultUrl = "https://graph.facebook.com/"+ inUID +"/picture?type=large&width=250&height=250";
+    	return resultUrl;
+    }
+    
+    private void showErrorMessage(String inMessage){
+    	Log.d(TAG, "Message_Error:" + inMessage);
+    }
+    
+    /*
     // Tinh toan tuoi tu ngay sinh
     private int calculateAgeFromBirthDay(String inBirthDay){
         int age = 0;
@@ -207,7 +221,7 @@ public class MainActivity extends Activity {
             Log.d(TAG, "calculateAgeFromBirthDay:" + ex.getMessage());
         }
         return age;
-    }
+    }*/
 
     // Tim kiem nguoi yeu dua vao cac thong tin san co
     private void findLoveAction(){
@@ -220,17 +234,6 @@ public class MainActivity extends Activity {
         
         // Thuc hien tiep action sau khi ham ben duoi thanh cong
         new ListOfProfileInfoAsyncRetriever().execute();
-    }
-    // Kiem tra xem facebook user nay co trong db chua
-    public Boolean checkFBidExist(String fbId){
-        Boolean isExisted = false;
-
-        return isExisted;
-    }
-
-    // Get cac thong tin can thiet cua user dua vao fbId
-    private void getUserDataFromFbId(String fbId){
-
     }
     
     /**
@@ -256,7 +259,7 @@ public class MainActivity extends Activity {
         
 
         try {
-          endpoint.insertProfileInfo(profileInfo).execute();
+        	endpoint.insertProfileInfo(profileInfo).execute();
         } catch (IOException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -296,7 +299,8 @@ public class MainActivity extends Activity {
         }
         return result;
       }
-
+      
+      // If you want the UI to wait until the task returns, use a ProgressDialog in the onPreExecute and onPostExecute methods.
       @Override
       protected void onPostExecute(CollectionResponseProfileInfo result) {
     	  listProfileInfo = result.getItems();
@@ -319,7 +323,7 @@ public class MainActivity extends Activity {
         imageViewYou.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	Log.d(TAG, "show url");
-            	Uri uri = Uri.parse("https://facebook.com/" + listProfileInfo.get(loverIndex).getProfileId());
+            	Uri uri = Uri.parse("https://facebook.com/" + listProfileInfo.get(loverIndex).getFuid());
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
