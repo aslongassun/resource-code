@@ -9,6 +9,8 @@ public class ConstantValue {
     public static final String MY_NAME = "name";
     public static final String MY_BIRTHDAY = "birthday";
     public static final String MY_LOCALE = "locale";
+    
+    public static final String LOCAL_VIETNAM = "VN";
 }
 
 

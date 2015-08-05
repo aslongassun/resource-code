@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/profileinfoendpoint/v1/20150701091809/java/1.18.0-rc/vmcop.com-profileinfoendpoint-v1-20150701091809-java-1.18.0-rc-sources.jar", 
-      "path": "vmcop.com-profileinfoendpoint-v1-20150701091809-java-1.18.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/profileinfoendpoint/v1/20150805073936/java/1.18.0-rc/vmcop.com-profileinfoendpoint-v1-20150805073936-java-1.18.0-rc-sources.jar", 
+      "path": "vmcop.com-profileinfoendpoint-v1-20150805073936-java-1.18.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2015-07-01 09:18"
+      "timestamp": "2015-08-05 07:39"
     }, 
     {
-      "path": "vmcop.com-profileinfoendpoint-v1-20150701091809-java-1.18.0-rc.jar.properties", 
+      "path": "vmcop.com-profileinfoendpoint-v1-20150805073936-java-1.18.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -675,5 +675,5 @@
   "packagePath": "simplethird.findlover", 
   "language_version": "1.18.0-rc", 
   "id": "profileinfoendpoint:v1", 
-  "revision": 20150701091809
+  "revision": 20150805073936
 }

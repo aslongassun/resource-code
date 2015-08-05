@@ -3797,3 +3797,292 @@ GIF89a  €ÿ ÿÿÿ   ,       D ;
 !ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-01 16:19:55.599
 !MESSAGE Analytics ping response: 200: OK
 GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.gwt.eclipse.core 4 0 2015-07-01 16:30:51.506
+!MESSAGE Could not stop source viewer server.
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.initLogging(JettyServer.java:40)
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.<clinit>(JettyServer.java:30)
+	at com.google.gwt.eclipse.core.GWTPlugin.stop(GWTPlugin.java:147)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:827)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:1)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:820)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:950)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:324)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1623)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1542)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:248)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:145)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:186)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:160)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalArgumentException: Logging bundle must not be null.
+	at org.eclipse.core.internal.runtime.Log.<init>(Log.java:30)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getLog(InternalPlatform.java:351)
+	at org.eclipse.core.runtime.Platform.getLog(Platform.java:1017)
+	at com.google.gdt.eclipse.platform.jetty.JettyEclipseLogger.<clinit>(JettyEclipseLogger.java:35)
+	... 20 more
+!SESSION 2015-07-23 16:16:49.482 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.7.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-23 16:18:17.724
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Backup'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.osgi 2 0 2015-07-23 16:41:32.084
+!MESSAGE While loading class "com.google.gdt.eclipse.suite.preferences.GdtPreferences", thread "Thread[org.eclipse.jdt.internal.ui.text.JavaReconciler,1,main]" timed out waiting (5003ms) for thread "Thread[org.eclipse.jdt.internal.ui.text.JavaReconciler,1,main]" to finish starting bundle "com.google.gdt.eclipse.suite_3.8.0.v201410302155-rel-r44 [473]". To avoid deadlock, thread "Thread[org.eclipse.jdt.internal.ui.text.JavaReconciler,1,main]" is proceeding but "com.google.gdt.eclipse.suite.preferences.GdtPreferences" may not be fully initialized.
+!STACK 0
+org.osgi.framework.BundleException: Unable to acquire the state change lock for the module: osgi.identity; osgi.identity="com.google.gdt.eclipse.suite"; type="osgi.bundle"; version:Version="3.8.0.v201410302155-rel-r44"; singleton:="true" [id=473] STARTED [STARTED]
+	at org.eclipse.osgi.container.Module.lockStateChange(Module.java:329)
+	at org.eclipse.osgi.container.Module.start(Module.java:389)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:454)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:531)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:324)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:320)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:36)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:391)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:345)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:337)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:160)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at com.google.gdt.eclipse.suite.ext.update.FeatureUpdateManager.checkForUpdates(FeatureUpdateManager.java:105)
+	at com.google.gdt.eclipse.suite.ext.builders.UpdateTriggerCompilationParticipant.isActive(UpdateTriggerCompilationParticipant.java:40)
+	at org.eclipse.jdt.internal.core.JavaModelManager$CompilationParticipants.getCompilationParticipants(JavaModelManager.java:344)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.notifyParticipants(ReconcileWorkingCopyOperation.java:239)
+	at org.eclipse.jdt.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:95)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:729)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:789)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1247)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:126)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.access$0(JavaReconcilingStrategy.java:108)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy$1.run(JavaReconcilingStrategy.java:89)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.reconcile(JavaReconcilingStrategy.java:87)
+	at org.eclipse.jdt.internal.ui.text.java.JavaReconcilingStrategy.initialReconcile(JavaReconcilingStrategy.java:178)
+	at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.initialReconcile(CompositeReconcilingStrategy.java:114)
+	at org.eclipse.jdt.internal.ui.text.JavaCompositeReconcilingStrategy.initialReconcile(JavaCompositeReconcilingStrategy.java:136)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.initialProcess(MonoReconciler.java:105)
+	at org.eclipse.jdt.internal.ui.text.JavaReconciler.initialProcess(JavaReconciler.java:406)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:173)
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-23 17:04:16.372
+!MESSAGE Sending POST request to Analytics: {cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, ea=GENERATE_ENDPOINT_CLASS, cid=1434624897397, ec=com.google.gdt.eclipse.appengine.swarm, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-23 17:04:16.381
+!MESSAGE Analytics ping request parameters: cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&ea=GENERATE_ENDPOINT_CLASS&cid=1434624897397&ec=com.google.gdt.eclipse.appengine.swarm&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-23 17:04:16.561
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.appengine.eclipse.core 1 0 2015-07-23 17:21:41.944
+!MESSAGE FindLover-AppEngine successfully deployed to Google App Engine
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-23 17:21:42.057
+!MESSAGE Sending POST request to Analytics: {cd7=NOT_USED, cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19, ea=DEPLOY_GAE, cid=1434624897397, cd9=false, ec=com.google.gdt.eclipse.core, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-23 17:21:42.060
+!MESSAGE Analytics ping request parameters: cd7=NOT_USED&cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&ea=DEPLOY_GAE&cid=1434624897397&cd9=false&ec=com.google.gdt.eclipse.core&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-07-23 17:21:42.197
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.gwt.eclipse.core 4 0 2015-07-23 18:22:56.474
+!MESSAGE Could not stop source viewer server.
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.initLogging(JettyServer.java:40)
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.<clinit>(JettyServer.java:30)
+	at com.google.gwt.eclipse.core.GWTPlugin.stop(GWTPlugin.java:147)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:827)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:1)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:820)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:950)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:324)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1623)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1542)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:248)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:145)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:186)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:160)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalArgumentException: Logging bundle must not be null.
+	at org.eclipse.core.internal.runtime.Log.<init>(Log.java:30)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getLog(InternalPlatform.java:351)
+	at org.eclipse.core.runtime.Platform.getLog(Platform.java:1017)
+	at com.google.gdt.eclipse.platform.jetty.JettyEclipseLogger.<clinit>(JettyEclipseLogger.java:35)
+	... 20 more
+!SESSION 2015-07-31 10:21:12.957 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.7.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-31 10:22:44.072
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Backup'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.google.gwt.eclipse.core 4 0 2015-07-31 14:50:02.253
+!MESSAGE Could not stop source viewer server.
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.initLogging(JettyServer.java:40)
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.<clinit>(JettyServer.java:30)
+	at com.google.gwt.eclipse.core.GWTPlugin.stop(GWTPlugin.java:147)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:827)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:1)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:820)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:950)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:324)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1623)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1542)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:248)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:145)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:186)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:160)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalArgumentException: Logging bundle must not be null.
+	at org.eclipse.core.internal.runtime.Log.<init>(Log.java:30)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getLog(InternalPlatform.java:351)
+	at org.eclipse.core.runtime.Platform.getLog(Platform.java:1017)
+	at com.google.gdt.eclipse.platform.jetty.JettyEclipseLogger.<clinit>(JettyEclipseLogger.java:35)
+	... 20 more
+!SESSION 2015-08-03 10:02:43.869 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.7.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-08-03 10:04:06.003
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Backup'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.google.gwt.eclipse.core 4 0 2015-08-03 10:28:56.293
+!MESSAGE Could not stop source viewer server.
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.initLogging(JettyServer.java:40)
+	at com.google.gdt.eclipse.platform.jetty.JettyServer.<clinit>(JettyServer.java:30)
+	at com.google.gwt.eclipse.core.GWTPlugin.stop(GWTPlugin.java:147)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:827)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$4.run(BundleContextImpl.java:1)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:820)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:950)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:324)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1623)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1542)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:248)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:145)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:626)
+	at org.eclipse.osgi.container.Module.stop(Module.java:488)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:186)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:160)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalArgumentException: Logging bundle must not be null.
+	at org.eclipse.core.internal.runtime.Log.<init>(Log.java:30)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getLog(InternalPlatform.java:351)
+	at org.eclipse.core.runtime.Platform.getLog(Platform.java:1017)
+	at com.google.gdt.eclipse.platform.jetty.JettyEclipseLogger.<clinit>(JettyEclipseLogger.java:35)
+	... 20 more
+!SESSION 2015-08-05 11:22:22.820 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.7.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2015-08-05 11:22:38.214
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-08-05 11:23:34.139
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Backup'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 13:49:23.770
+!MESSAGE Sending POST request to Analytics: {cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, ea=GENERATE_ENDPOINT_CLASS, cid=1434624897397, ec=com.google.gdt.eclipse.appengine.swarm, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 13:49:24.059
+!MESSAGE Analytics ping request parameters: cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&ea=GENERATE_ENDPOINT_CLASS&cid=1434624897397&ec=com.google.gdt.eclipse.appengine.swarm&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 13:49:25.271
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.appengine.eclipse.core 1 0 2015-08-05 14:06:58.637
+!MESSAGE FindLover-AppEngine successfully deployed to Google App Engine
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:06:58.751
+!MESSAGE Sending POST request to Analytics: {cd7=NOT_USED, cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19, ea=DEPLOY_GAE, cid=1434624897397, cd9=false, ec=com.google.gdt.eclipse.core, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:06:58.753
+!MESSAGE Analytics ping request parameters: cd7=NOT_USED&cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&ea=DEPLOY_GAE&cid=1434624897397&cd9=false&ec=com.google.gdt.eclipse.core&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:06:58.917
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:37:36.637
+!MESSAGE Sending POST request to Analytics: {cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, ea=GENERATE_ENDPOINT_CLASS, cid=1434624897397, ec=com.google.gdt.eclipse.appengine.swarm, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:37:36.639
+!MESSAGE Analytics ping request parameters: cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&ea=GENERATE_ENDPOINT_CLASS&cid=1434624897397&ec=com.google.gdt.eclipse.appengine.swarm&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:37:36.791
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;
+
+!ENTRY com.google.appengine.eclipse.core 1 0 2015-08-05 14:41:11.559
+!MESSAGE FindLover-AppEngine successfully deployed to Google App Engine
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:41:11.666
+!MESSAGE Sending POST request to Analytics: {cd7=NOT_USED, cd5=true, cd6=GAE 1.9.22, cd3=3.9.1.v20140825-1431, cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44, cd1=org.eclipse.epp.package.java.product, cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19, ea=DEPLOY_GAE, cid=1434624897397, cd9=false, ec=com.google.gdt.eclipse.core, v=1, t=event, el=id=1434624897397&ev=3.9.1.v20140825-1431&v=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&gaev=1.9.22&p=org.eclipse.epp.package.java.product&action=gae_backend_deploy&appIdHash=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&isGoogleCloudSqlUsed=false&isSignedIn=true, cd10=1434624897397, an=Google Plugin for Eclipse, tid=UA-43239122-1}
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:41:11.668
+!MESSAGE Analytics ping request parameters: cd7=NOT_USED&cd5=true&cd6=GAE%201.9.22&cd3=3.9.1.v20140825-1431&cd4=com.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44&cd1=org.eclipse.epp.package.java.product&cd2=94394089CB3CE5B1D6074B2F86F2B78DD962EA19&ea=DEPLOY_GAE&cid=1434624897397&cd9=false&ec=com.google.gdt.eclipse.core&v=1&t=event&el=id%3D1434624897397%26ev%3D3.9.1.v20140825-1431%26v%3Dcom.google.gdt.eclipse.suite.e44.feature_3.8.0.v201410302155-rel-r44%26gaev%3D1.9.22%26p%3Dorg.eclipse.epp.package.java.product%26action%3Dgae_backend_deploy%26appIdHash%3D94394089CB3CE5B1D6074B2F86F2B78DD962EA19%26isGoogleCloudSqlUsed%3Dfalse%26isSignedIn%3Dtrue&cd10=1434624897397&an=Google%20Plugin%20for%20Eclipse&tid=UA-43239122-1
+
+!ENTRY com.google.gdt.eclipse.suite.ext 1 0 2015-08-05 14:41:11.821
+!MESSAGE Analytics ping response: 200: OK
+GIF89a  €ÿ ÿÿÿ   ,       D ;

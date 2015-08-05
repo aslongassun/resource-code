@@ -52,14 +52,14 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "profileinfoendpoint.getProfileInfo" : {
+    "profileinfoendpoint.removeProfileInfo" : {
       "path" : "profileinfo/{id}",
-      "httpMethod" : "GET",
+      "httpMethod" : "DELETE",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.getProfileInfo",
+      "rosyMethod" : "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.removeProfileInfo",
       "request" : {
         "parameters" : {
           "id" : {
@@ -68,6 +68,22 @@
           }
         },
         "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "profileinfoendpoint.updateProfileInfo" : {
+      "path" : "profileinfo",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.updateProfileInfo",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -89,30 +105,14 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "profileinfoendpoint.updateProfileInfo" : {
-      "path" : "profileinfo",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.updateProfileInfo",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "profileinfoendpoint.removeProfileInfo" : {
+    "profileinfoendpoint.getProfileInfo" : {
       "path" : "profileinfo/{id}",
-      "httpMethod" : "DELETE",
+      "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.removeProfileInfo",
+      "rosyMethod" : "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.getProfileInfo",
       "request" : {
         "parameters" : {
           "id" : {
@@ -123,7 +123,7 @@
         "body" : "empty"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     }
   },
@@ -168,6 +168,12 @@
           },
           "locale" : {
             "type" : "string"
+          },
+          "bornYear" : {
+            "type" : "integer"
+          },
+          "isFromUpload" : {
+            "type" : "boolean"
           }
         }
       },
@@ -191,11 +197,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "namespace" : {
-            "type" : "string"
-          },
           "complete" : {
             "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
           }
         }
       }
@@ -206,7 +212,12 @@
           "$ref" : "CollectionResponse_ProfileInfo"
         }
       },
-      "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.getProfileInfo" : {
+      "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.removeProfileInfo" : {
+      },
+      "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.updateProfileInfo" : {
+        "request" : {
+          "$ref" : "ProfileInfo"
+        },
         "response" : {
           "$ref" : "ProfileInfo"
         }
@@ -219,15 +230,10 @@
           "$ref" : "ProfileInfo"
         }
       },
-      "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.updateProfileInfo" : {
-        "request" : {
-          "$ref" : "ProfileInfo"
-        },
+      "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.getProfileInfo" : {
         "response" : {
           "$ref" : "ProfileInfo"
         }
-      },
-      "com.vmcop.simplethird.findlover.ProfileInfoEndpoint.removeProfileInfo" : {
       }
     }
   }

@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="containsProfileInfo" key="selection"/>
+		<item value="insertProfileInfo" key="selection"/>
 		<list key="findhistory">
+			<item value="insertProfileInfo"/>
+			<item value="checkFBidExist"/>
+			<item value="findProfileInfoByFUID"/>
 			<item value="containsProfileInfo"/>
 			<item value="persist"/>
 			<item value="locale"/>
 			<item value="oncomplete"/>
 			<item value="key"/>
-			<item value="link"/>
-			<item value="listProfileInfo"/>
-			<item value="setImageProfileForImageView"/>
 		</list>
 		<list key="replacehistory">
 		</list>

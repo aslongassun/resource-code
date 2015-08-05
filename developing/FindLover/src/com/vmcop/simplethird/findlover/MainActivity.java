@@ -1,9 +1,12 @@
 package com.vmcop.simplethird.findlover;
 
 import java.io.IOException;
-import java.security.KeyFactory;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -33,6 +36,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.squareup.picasso.Picasso;
 import com.vmcop.simplethird.findlover.constant.ConstantValue;
 import com.vmcop.simplethird.findlover.profileinfoendpoint.Profileinfoendpoint;
@@ -107,7 +111,6 @@ public class MainActivity extends Activity {
     //===========2015/06/04 VMCop=========//
 
     private void showDialog(){
-        Log.d(TAG, "showDialog!");
         // show a dialog notice no image found
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Connection error");
@@ -125,6 +128,7 @@ public class MainActivity extends Activity {
     // Thuc hien xu ly sau khi login thanh cong
     private void doAfterLoginSuccess(LoginResult loginResult){
         Log.d(TAG, "Login Success!");
+        
         Profile currProfile = Profile.getCurrentProfile();
         // Set Image vao ImageView ImageView yourImageView = (ImageView)findViewById(R.id.You);
         setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You));
@@ -140,9 +144,6 @@ public class MainActivity extends Activity {
         });
         
         requestGraphData(loginResult);
-
-
-
     }
 
     // Set Image get tu Url vao ImageView
@@ -161,6 +162,7 @@ public class MainActivity extends Activity {
                             GraphResponse response) {
                         Log.d(TAG, "object:" + object.toString());
                         //----------TODO----------//
+                        
                         /*
                         // Save xuong data cua may
                         SharedPreferences mySharedPreferencesInfo = getSharedPreferences(ConstantValue.PREFS_NAME, 0);
@@ -172,31 +174,54 @@ public class MainActivity extends Activity {
                         editor.putString(ConstantValue.MY_BIRTHDAY,object.optString(ConstantValue.MY_BIRTHDAY));
                         editor.putInt(ConstantValue.MY_AGE, calculateAgeFromBirthDay(object.optString(ConstantValue.MY_BIRTHDAY)));
                         // currProfile.getProfilePictureUri(500, 500).toString()
-                        
                         editor.commit();
                         */
-                        //------------------------//
-                        
-                        
-                        //------------------------//
+
+                        // Facebook ID only for app
                         profileInfo.setFuid(object.optString(ConstantValue.MY_PROFILE_ID));
+                        // Facebook Name
                         profileInfo.setUserName(object.optString(ConstantValue.MY_NAME));
+                        // Facebook Sex - Male/Female
                         profileInfo.setUserSex(object.optString(ConstantValue.MY_SEX));
-                        profileInfo.setBirthday(object.optString(ConstantValue.MY_BIRTHDAY));
+                        // Birthday
+                        String birthDayStr = object.optString(ConstantValue.MY_BIRTHDAY);
+                        String[] dateBirthArr = birthDayStr.split("/");
+                        profileInfo.setBirthday(birthDayStr);
+                        if(dateBirthArr.length > 2){
+                        	// Facebook Born year
+                        	profileInfo.setBornYear(Integer.parseInt(dateBirthArr[2]));
+                        }
+                        // Facebook Image Profile
                         profileInfo.setUrlImageProfile(buildImageProfileUrlFromUID(object.optString(ConstantValue.MY_PROFILE_ID)));
-                        profileInfo.setLocale(object.optString(ConstantValue.MY_LOCALE));
-                        //------------------------//
+                        // User Local
+                        profileInfo.setLocale(ConstantValue.LOCAL_VIETNAM);
+                        // User nay ko duoc lay tu upload
+                        profileInfo.setIsFromUpload(false);
+                        
                         new ProfileInfoTask().execute();
-                        //------------------------//
                     }
                 }
         );
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,gender,birthday,locale");
-        //parameters.putString("fields", "id,name,gender,birthday,locale,location,timezone,address,languages");
+        parameters.putString("fields", "id,name,gender,birthday");
         request.setParameters(parameters);
         request.executeAsync();
     }
+    
+    /*
+    private Date partStringToDate(String inStr){
+    	try {
+    		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+			Date date = formatter.parse(inStr);
+			Log.d(TAG, "date part:" + date);
+			return date;
+		} catch (ParseException e) {
+			Log.d(TAG, "exception:" + e.getMessage());
+			// e.printStackTrace();
+			return Calendar.getInstance().getTime();
+		}
+    }
+    */
     
     private String buildImageProfileUrlFromUID(String inUID){
     	if(inUID == null || inUID == ""){
