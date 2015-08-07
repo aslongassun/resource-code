@@ -1,0 +1,14 @@
+package com.vmcop.createcsv;
+
+public class MainActivity {
+	
+	public static void main(String[] args) {
+		
+		Integer bornYear = 1991;
+		String userSex = "female";
+		
+		// TODO Auto-generated method stub
+		System.out.println("Hello");
+	}
+
+}

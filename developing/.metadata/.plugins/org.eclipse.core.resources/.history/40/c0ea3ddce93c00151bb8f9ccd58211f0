@@ -1,0 +1,47 @@
+package com.vmcop.createcsv;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.List;
+
+import com.opencsv.CSVReader;
+
+public class MainActivity {
+	
+	public static void main(String[] args) {
+		
+		// Nam Sinh
+		Integer bornYear = 1991;
+		// Gioi Tinh
+		String userSex = "female";
+		// Thu Muc File Input/Output
+		String urlInFolder = "C:\\androidapp\\resource-code\\developing\\upload_findlover\\createcsvfile";
+		// Ten File Input
+		String fileNameIn = "FB_File_Woman_1991.csv";
+		String fileNameOut = "FB_File_Woman_1991_out.csv";
+		
+		String csvFilename = urlInFolder + "\\" + fileNameIn;
+		
+		
+		CSVReader csvReader;
+		try {
+			// Phan doc file
+			csvReader = new CSVReader(new FileReader(csvFilename));
+			List<String[]> content = csvReader.readAll();
+			
+			for (String[] row : content) {
+			    System.out.println(row[0]
+			               + " # " + row[1]);
+			}
+			csvReader.close();
+			
+			// Phan ghi file
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

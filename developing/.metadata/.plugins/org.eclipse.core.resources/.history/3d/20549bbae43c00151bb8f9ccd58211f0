@@ -1,0 +1,21 @@
+package com.vmcop.createcsv;
+
+public class MainActivity {
+	
+	public static void main(String[] args) {
+		// Nam Sinh
+		Integer bornYear = 1991;
+		// Gioi Tinh
+		String userSex = "female";
+		// Thu Muc File Input
+		String urlInFolder = "C:/androidapp/resource-code/developing/upload_findlover/createcsvfile";
+		// Thu Muc File Output
+		String urlOutFolder = "C:/androidapp/resource-code/developing/upload_findlover/createcsvfile";
+		// Ten File Input
+		String fileName = "FB_File_Woman_1991.csv";
+		
+		// TODO Auto-generated method stub
+		System.out.println("Hello");
+	}
+
+}
