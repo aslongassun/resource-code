@@ -1,8 +1,12 @@
 package com.vmcop.simplethird.findlover;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -32,6 +36,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.squareup.picasso.Picasso;
 import com.vmcop.simplethird.findlover.constant.ConstantValue;
 import com.vmcop.simplethird.findlover.profileinfoendpoint.Profileinfoendpoint;
