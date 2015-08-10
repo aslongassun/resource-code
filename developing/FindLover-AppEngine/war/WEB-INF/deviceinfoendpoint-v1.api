@@ -27,27 +27,6 @@
   "ownerName" : "vmcop.com",
   "packagePath" : "simplethird.findlover",
   "methods" : {
-    "deviceinfoendpoint.removeDeviceInfo" : {
-      "path" : "deviceinfo/{id}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.removeDeviceInfo",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
-      }
-    },
     "deviceinfoendpoint.listDeviceInfo" : {
       "path" : "deviceinfo",
       "httpMethod" : "GET",
@@ -73,6 +52,22 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "deviceinfoendpoint.insertDeviceInfo" : {
+      "path" : "deviceinfo",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.insertDeviceInfo",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "deviceinfoendpoint.updateDeviceInfo" : {
       "path" : "deviceinfo",
       "httpMethod" : "PUT",
@@ -89,20 +84,25 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "deviceinfoendpoint.insertDeviceInfo" : {
-      "path" : "deviceinfo",
-      "httpMethod" : "POST",
+    "deviceinfoendpoint.removeDeviceInfo" : {
+      "path" : "deviceinfo/{id}",
+      "httpMethod" : "DELETE",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.insertDeviceInfo",
+      "rosyMethod" : "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.removeDeviceInfo",
       "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
-        "body" : "autoTemplate(backendResponse)"
+        "body" : "empty"
       }
     },
     "deviceinfoendpoint.getDeviceInfo" : {
@@ -162,11 +162,17 @@
       }
     },
     "methods" : {
-      "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.removeDeviceInfo" : {
-      },
       "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.listDeviceInfo" : {
         "response" : {
           "$ref" : "CollectionResponse_DeviceInfo"
+        }
+      },
+      "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.insertDeviceInfo" : {
+        "request" : {
+          "$ref" : "DeviceInfo"
+        },
+        "response" : {
+          "$ref" : "DeviceInfo"
         }
       },
       "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.updateDeviceInfo" : {
@@ -177,13 +183,7 @@
           "$ref" : "DeviceInfo"
         }
       },
-      "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.insertDeviceInfo" : {
-        "request" : {
-          "$ref" : "DeviceInfo"
-        },
-        "response" : {
-          "$ref" : "DeviceInfo"
-        }
+      "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.removeDeviceInfo" : {
       },
       "com.vmcop.simplethird.findlover.DeviceInfoEndpoint.getDeviceInfo" : {
         "response" : {
