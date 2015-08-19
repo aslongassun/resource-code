@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.json.JSONObject;
 
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -55,6 +57,9 @@ public class MainActivity extends Activity {
 	
 	Integer loverIndex;
     
+	// ProgressBar Vinh Hua Quoc
+	private ProgressBar spinner;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +94,12 @@ public class MainActivity extends Activity {
 
         // Click on Button Find
         final Button button = (Button) findViewById(R.id.btnFind);
+        
+        // ProgressBar Vinh Hua Quoc
+        spinner = (ProgressBar) findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+        Log.d(TAG, "spinner1:" + spinner);
+        
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 findLoveAction();
@@ -102,6 +113,7 @@ public class MainActivity extends Activity {
         jsonReturn = new JSONObject();
         profileInfo = new ProfileInfo();
         listProfileInfo = new ArrayList<ProfileInfo>();
+        //spinner.setVisibility(View.GONE);
     }
     //===========2015/06/04 VMCop=========//
 
@@ -122,13 +134,18 @@ public class MainActivity extends Activity {
 
     // Thuc hien xu ly sau khi login thanh cong
     private void doAfterLoginSuccess(LoginResult loginResult){
-        Log.d(TAG, "Login Success!");
+        Log.d(TAG, "loginResult:" + loginResult);
         
-        Profile currProfile = Profile.getCurrentProfile();
-        // Set Image vao ImageView ImageView yourImageView = (ImageView)findViewById(R.id.You);
-        setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You));
+        try{
+	        Profile currProfile = Profile.getCurrentProfile();
+	        // Set Image vao ImageView 
+	        setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You));
+        } catch(Exception ex){
+        	Log.d(TAG, "Profile set failse");
+        }
         
         // Click on Imageview
+        
         final ImageView imageViewYou = (ImageView) findViewById(R.id.You);
         imageViewYou.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -138,7 +155,9 @@ public class MainActivity extends Activity {
             }
         });
         
+        
         requestGraphData(loginResult);
+        
     }
 
     // Set Image get tu Url vao ImageView
@@ -148,6 +167,8 @@ public class MainActivity extends Activity {
 
     // Lay ve nhung thong tin can thiet cua user login
     private void requestGraphData(LoginResult loginResult){
+    	Log.d(TAG, "loginResult");
+    	
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -155,6 +176,8 @@ public class MainActivity extends Activity {
                     public void onCompleted(
                             JSONObject object,
                             GraphResponse response) {
+                    	Log.d(TAG, "loginResult: onCompleted");
+                    	
                         Log.d(TAG, "object:" + object.toString());
 
                         // Facebook ID only for app
@@ -179,6 +202,7 @@ public class MainActivity extends Activity {
                         profileInfo.setIsFromUpload(false);
                         
                         new ProfileInfoTask().execute();
+                        
                     }
                 }
         );
@@ -186,6 +210,7 @@ public class MainActivity extends Activity {
         parameters.putString("fields", "id,name,gender,birthday");
         request.setParameters(parameters);
         request.executeAsync();
+        
     }
     
     private String buildImageProfileUrlFromUID(String inUID){
@@ -204,6 +229,8 @@ public class MainActivity extends Activity {
     // Tim kiem nguoi yeu dua vao cac thong tin san co
     private void findLoveAction(){
         Log.d(TAG, "Find Love!");
+        // ProgressBar Vinh Hua Quoc
+        spinner.setVisibility(View.VISIBLE);
         // Thuc hien tiep action sau khi ham ben duoi thanh cong
         new ListOfProfileInfoAsyncRetriever().execute();
     }
@@ -285,8 +312,24 @@ public class MainActivity extends Activity {
       
     }
     
+    private static int randInt(int min, int max) {
+
+        // NOTE: Usually this should be a field rather than a method
+        // variable so that it is not re-seeded every call.
+        Random rand = new Random();
+
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
+    }
+    
     private void matchLove(){
-    	loverIndex = 0;
+    	Log.d(TAG, "==listProfileInfo.size:" + listProfileInfo.size());
+    	loverIndex = randInt(0, listProfileInfo.size() - 1);
+    	Log.d(TAG, "==loverIndex:" + loverIndex);
+    	/*
     	for(Integer i = 0; i < listProfileInfo.size(); i++){
     		Integer bornYear = listProfileInfo.get(i).getBornYear();
     		Log.d(TAG, "==ItemDataBornYear==" + i + ":" + bornYear);
@@ -299,6 +342,8 @@ public class MainActivity extends Activity {
     			break;
     		}
     	}
+    	*/
+    	
     	setImageProfileForImageView(listProfileInfo.get(loverIndex).getUrlImageProfile(),(ImageView)findViewById(R.id.Love));
     	// Click on Imageview
         final ImageView imageViewYou = (ImageView) findViewById(R.id.Love);
@@ -309,6 +354,9 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
+        
+        // ProgressBar Vinh Hua Quoc
+        spinner.setVisibility(View.GONE);
     }
     
     //====================================//
