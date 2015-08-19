@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:background="@drawable/background">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -10,47 +11,49 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-       <!-- <ImageView
-            android:layout_margin="10dp"
-            android:src="@drawable/profile"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:layout_weight="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/You"
-            android:contentDescription="@string/desc_you"/>-->
-
         <ImageView
             android:id="@+id/You"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:paddingRight="5dp"
             android:src="@drawable/profile"
+            android:layout_margin = "7dp"
             android:clickable="true"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:contentDescription="@null"/>
 
         <ImageView
             android:id="@+id/Love"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:paddingLeft="5dp"
             android:src="@drawable/profile"
+            android:layout_margin = "7dp"
             android:clickable="true"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:contentDescription="@null"/>
 
     </LinearLayout>
-
+    
     <LinearLayout 
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
+        android:paddingTop="10dp"
         android:gravity="center">
+
         <Button
             android:id="@+id/btnFind"
             android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_find" />
+            android:layout_height="102dp"
+            android:text="@null"
+            android:background="@drawable/button_press" />
     </LinearLayout>
+	
 
+    <ProgressBar
+	    style="?android:attr/progressBarStyleLarge"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/progressBar"
+	    android:progressDrawable="@drawable/circular_progress_bar"/>
+    
 </LinearLayout>
