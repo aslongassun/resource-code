@@ -49,11 +49,12 @@
     </LinearLayout>
 	
 
-    <ProgressBar
-	    style="?android:attr/progressBarStyleLarge"
+    <!-- <ImageView
+	    android:id="@+id/imageView111"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:id="@+id/progressBar"
-	    android:progressDrawable="@drawable/circular_progress_bar"/>
+	    android:src="@drawable/loading_01"
+	    android:visibility="gone"
+	    android:contentDescription="@null" /> -->
     
 </LinearLayout>
