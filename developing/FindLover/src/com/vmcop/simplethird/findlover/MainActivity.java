@@ -8,10 +8,15 @@ import java.util.Random;
 
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +24,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -34,6 +38,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.vmcop.simplethird.findlover.constant.ConstantValue;
 import com.vmcop.simplethird.findlover.profileinfoendpoint.Profileinfoendpoint;
@@ -57,9 +62,13 @@ public class MainActivity extends Activity {
 	
 	Integer loverIndex;
     
-	// ProgressBar Vinh Hua Quoc
-	private ProgressBar spinner;
+	// ProgressDialog Vinh Hua Quoc
+	ProgressDialog barProgressDialog;
 	
+	// Loading Animate
+	// private AnimationDrawable loadingViewAnim;
+    // private ImageView loadigIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,10 +104,16 @@ public class MainActivity extends Activity {
         // Click on Button Find
         final Button button = (Button) findViewById(R.id.btnFind);
         
-        // ProgressBar Vinh Hua Quoc
-        spinner = (ProgressBar) findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
-        Log.d(TAG, "spinner1:" + spinner);
+        // ProgressDialog Vinh Hua Quoc
+        barProgressDialog = new ProgressDialog(MainActivity.this, AlertDialog.THEME_TRADITIONAL);
+        barProgressDialog.setMessage("Finding...");
+        barProgressDialog.setCanceledOnTouchOutside(false);
+        barProgressDialog.hide();
+        
+        //loadigIcon = (ImageView) findViewById(R.id.imageView111);
+        //loadigIcon.setVisibility(View.GONE);
+        //loadigIcon.setBackgroundResource(R.anim.loading_animation);
+        //loadingViewAnim = (AnimationDrawable) loadigIcon.getBackground();
         
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -139,7 +154,7 @@ public class MainActivity extends Activity {
         try{
 	        Profile currProfile = Profile.getCurrentProfile();
 	        // Set Image vao ImageView 
-	        setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You));
+	        setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You),0);
         } catch(Exception ex){
         	Log.d(TAG, "Profile set failse");
         }
@@ -161,10 +176,29 @@ public class MainActivity extends Activity {
     }
 
     // Set Image get tu Url vao ImageView
-    private void setImageProfileForImageView(String imageUrl, ImageView inImageView){
-        Picasso.with(MainActivity.this).load(imageUrl).into(inImageView);
-    }
+	private void setImageProfileForImageView(String imageUrl,final ImageView inImageView,final Integer typeYouAre){
+    	
+        Picasso.with(MainActivity.this).load(imageUrl).into(inImageView, new Callback() {
+            @SuppressLint("NewApi")
+			@Override
+            public void onSuccess() {
+            	if(typeYouAre == 1){
+                	Drawable background = inImageView.getDrawable();
+                	inImageView.setImageDrawable(null);
+                	inImageView.setBackground(background);
+            		Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.popup_icon);
+        	    	inImageView.setImageBitmap(mBitmap);
+            	}
+            }
+            
+            @Override
+            public void onError() {
 
+            }
+        });
+    	
+    }
+    
     // Lay ve nhung thong tin can thiet cua user login
     private void requestGraphData(LoginResult loginResult){
     	Log.d(TAG, "loginResult");
@@ -229,8 +263,7 @@ public class MainActivity extends Activity {
     // Tim kiem nguoi yeu dua vao cac thong tin san co
     private void findLoveAction(){
         Log.d(TAG, "Find Love!");
-        // ProgressBar Vinh Hua Quoc
-        spinner.setVisibility(View.VISIBLE);
+        
         // Thuc hien tiep action sau khi ham ben duoi thanh cong
         new ListOfProfileInfoAsyncRetriever().execute();
     }
@@ -289,7 +322,9 @@ public class MainActivity extends Activity {
         Profileinfoendpoint endpoint = endpointBuilder.build();
 
         try {
-          result = endpoint.listProfileInfo().execute();
+        	//result = endpoint.listProfileInfo().execute();
+        	result = endpoint.listProfileInfo().setLimit(3).execute();
+        	
         } catch (IOException e) {
           Log.d(TAG, "IOException:" + e.getMessage());
           // TODO Auto-generated catch block
@@ -299,15 +334,34 @@ public class MainActivity extends Activity {
         return result;
       }
       
+      @Override
+      protected void onPreExecute(){
+          // ProgressDialog Vinh Hua Quoc
+          barProgressDialog.show();
+          
+          // loadigIcon.setVisibility(View.VISIBLE);
+          // loadingViewAnim.start();
+      }
+      
       // If you want the UI to wait until the task returns, use a ProgressDialog in the onPreExecute and onPostExecute methods.
       @Override
       protected void onPostExecute(CollectionResponseProfileInfo result) {
     	  if(result == null){
+    		  
     		  Log.d(TAG, "==List data from server is null==");
+    		  
+    		  // ProgressDialog Vinh Hua Quoc
+              barProgressDialog.hide();
     		  return;
     	  }
     	  listProfileInfo = result.getItems();
     	  matchLove();
+    	  
+          // ProgressDialog Vinh Hua Quoc
+          barProgressDialog.hide();
+          
+          // loadigIcon.setVisibility(View.GONE);
+          // loadingViewAnim.stop();
       }
       
     }
@@ -329,22 +383,9 @@ public class MainActivity extends Activity {
     	Log.d(TAG, "==listProfileInfo.size:" + listProfileInfo.size());
     	loverIndex = randInt(0, listProfileInfo.size() - 1);
     	Log.d(TAG, "==loverIndex:" + loverIndex);
-    	/*
-    	for(Integer i = 0; i < listProfileInfo.size(); i++){
-    		Integer bornYear = listProfileInfo.get(i).getBornYear();
-    		Log.d(TAG, "==ItemDataBornYear==" + i + ":" + bornYear);
-    		if(listProfileInfo.get(i).getIsFromUpload()){
-    			
-    			Log.d(TAG, "==ItemDataUpload==" + i + ":" + listProfileInfo.get(i).getIsFromUpload());
-    		}
-    		if(listProfileInfo.get(i).getUserSex().equalsIgnoreCase(ConstantValue.SEX_FEMALE)){
-    			loverIndex = i;
-    			break;
-    		}
-    	}
-    	*/
+    	Log.d(TAG, "==listProfileInfo:" + listProfileInfo);
     	
-    	setImageProfileForImageView(listProfileInfo.get(loverIndex).getUrlImageProfile(),(ImageView)findViewById(R.id.Love));
+    	setImageProfileForImageView(listProfileInfo.get(loverIndex).getUrlImageProfile(),(ImageView)findViewById(R.id.Love),1);
     	// Click on Imageview
         final ImageView imageViewYou = (ImageView) findViewById(R.id.Love);
         imageViewYou.setOnClickListener(new View.OnClickListener() {
@@ -355,10 +396,8 @@ public class MainActivity extends Activity {
             }
         });
         
-        // ProgressBar Vinh Hua Quoc
-        spinner.setVisibility(View.GONE);
     }
-    
+
     //====================================//
 
     @Override
