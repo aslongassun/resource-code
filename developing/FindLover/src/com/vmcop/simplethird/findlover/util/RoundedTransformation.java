@@ -1,18 +1,10 @@
 package com.vmcop.simplethird.findlover.util;
 
-import java.io.File;
-
-import com.vmcop.simplethird.findlover.MainActivity;
-
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 
 public class RoundedTransformation  implements com.squareup.picasso.Transformation {
 

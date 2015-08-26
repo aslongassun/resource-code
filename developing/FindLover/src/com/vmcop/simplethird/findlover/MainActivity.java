@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -24,7 +25,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -53,8 +53,6 @@ public class MainActivity extends Activity {
     CallbackManager mCallbackManager;
 
     List<String> permissionNeeds= Arrays.asList("user_birthday", "user_friends", "public_profile");
-
-    JSONObject jsonReturn;
     
 	ProfileInfo profileInfo;
 	
@@ -64,11 +62,9 @@ public class MainActivity extends Activity {
     
 	// ProgressDialog Vinh Hua Quoc
 	ProgressDialog barProgressDialog;
-	
-	// Loading Animate
-	// private AnimationDrawable loadingViewAnim;
-    // private ImageView loadigIcon;
 
+	SharedPreferences mySharedPreferencesInfo;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +92,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(getApplicationContext(), "onError", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), "onError", Toast.LENGTH_SHORT).show();
                 showDialog();
             }
         });
@@ -110,43 +106,114 @@ public class MainActivity extends Activity {
         barProgressDialog.setCanceledOnTouchOutside(false);
         barProgressDialog.hide();
         
-        //loadigIcon = (ImageView) findViewById(R.id.imageView111);
-        //loadigIcon.setVisibility(View.GONE);
-        //loadigIcon.setBackgroundResource(R.anim.loading_animation);
-        //loadingViewAnim = (AnimationDrawable) loadigIcon.getBackground();
-        
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() { 
             public void onClick(View v) {
                 findLoveAction();
             }
         });
         
-        
     }
 
     private void initData(){
-        jsonReturn = new JSONObject();
         profileInfo = new ProfileInfo();
         listProfileInfo = new ArrayList<ProfileInfo>();
-        //spinner.setVisibility(View.GONE);
+        mySharedPreferencesInfo = getSharedPreferences(ConstantValue.PREFS_NAME, 0);
     }
+    
     //===========2015/06/04 VMCop=========//
-
-    private void showDialog(){
-        // show a dialog notice no image found
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Connection error");
-        builder.setMessage("Check your internet connection and try again.");
-        builder.setPositiveButton("Try again",	new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissionNeeds);
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    
+    // Tim kiem nguoi yeu dua vao cac thong tin san co
+    private void findLoveAction(){
+        Log.d(TAG, "Find Love!");
+        
+        // Thuc hien tiep action sau khi ham ben duoi thanh cong
+        new ListOfProfileInfoAsyncRetriever().execute();
     }
+    /**
+     * AsyncTask for retrieving the list of places (e.g., stores) and updating the
+     * corresponding results list.
+    */
+    private class ListOfProfileInfoAsyncRetriever extends AsyncTask<Void, Void, CollectionResponseProfileInfo> {
 
+      @Override
+      protected CollectionResponseProfileInfo doInBackground(Void... params) {
+
+    	Profileinfoendpoint.Builder endpointBuilder = new Profileinfoendpoint.Builder(
+            AndroidHttp.newCompatibleTransport(), new JacksonFactory(), null);
+
+        endpointBuilder = CloudEndpointUtils.updateBuilder(endpointBuilder);
+
+        CollectionResponseProfileInfo result = null;
+
+        Profileinfoendpoint endpoint = endpointBuilder.build();
+
+        try {
+        	String fbUID = mySharedPreferencesInfo.getString(ConstantValue.MY_PROFILE_ID, ConstantValue.EMPTY_STRING);
+        	if(fbUID != ConstantValue.EMPTY_STRING){
+	        	String sexType = mySharedPreferencesInfo.getString(ConstantValue.MY_SEX, ConstantValue.EMPTY_STRING);
+	        	
+	        	if(sexType.equals(ConstantValue.SEX_MALE)){
+	        		sexType = ConstantValue.SEX_FEMALE;
+	        	} else {
+	        		sexType = ConstantValue.SEX_MALE;
+	        	}
+	        	
+	        	Integer bornYear = mySharedPreferencesInfo.getInt(ConstantValue.MY_BORN_YEAR, 0);
+	        	
+	        	Log.d(TAG, "sexType:" + sexType);
+	        	Log.d(TAG, "bornYear:" + bornYear);
+	        	
+	        	result = endpoint.listProfileInfo().setSextype(sexType).setFromyear(1989).setToyear(1996).setLimit(3).execute();
+	        	
+	        	
+        	} else {
+        		showErrorMessage("Profile info data is Empty!");
+        	}
+        } catch (IOException e) {
+          Log.d(TAG, "IOException:" + e.getMessage());
+        }
+        return result;
+      }
+      
+      @Override
+      protected void onPreExecute(){
+          // ProgressDialog Vinh Hua Quoc
+          barProgressDialog.show();
+      }
+      
+      // If you want the UI to wait until the task returns, use a ProgressDialog in the onPreExecute and onPostExecute methods.
+      @Override
+      protected void onPostExecute(CollectionResponseProfileInfo result) {
+    	  if(result == null){
+    		  
+    		  Log.d(TAG, "==List data from server is null==");
+    		  
+    		  // ProgressDialog Vinh Hua Quoc
+              barProgressDialog.hide();
+    		  return;
+    	  }
+    	  
+    	  listProfileInfo = result.getItems();
+    	  
+    	  Log.d(TAG, "==listProfileInfo==" + listProfileInfo);
+    	  
+    	  loverIndex = randInt(0, listProfileInfo.size() - 1);
+      	
+      	  setImageProfileForImageView(listProfileInfo.get(loverIndex).getUrlImageProfile(),(ImageView)findViewById(R.id.Love),1);
+      	  // Click on Imageview
+          final ImageView imageViewYou = (ImageView) findViewById(R.id.Love);
+          imageViewYou.setOnClickListener(new View.OnClickListener() {
+              public void onClick(View v) {
+              	Uri uri = Uri.parse("https://facebook.com/" + listProfileInfo.get(loverIndex).getFuid());
+                  startActivity(new Intent(Intent.ACTION_VIEW, uri));
+              }
+          });
+    	  
+          // ProgressDialog Vinh Hua Quoc
+          barProgressDialog.hide();
+      }
+    }
+    
     // Thuc hien xu ly sau khi login thanh cong
     private void doAfterLoginSuccess(LoginResult loginResult){
         Log.d(TAG, "loginResult:" + loginResult);
@@ -156,11 +223,10 @@ public class MainActivity extends Activity {
 	        // Set Image vao ImageView 
 	        setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You),0);
         } catch(Exception ex){
-        	Log.d(TAG, "Profile set failse");
+        	Log.d(TAG, "Profile set failse:" + ex.getMessage());
         }
         
         // Click on Imageview
-        
         final ImageView imageViewYou = (ImageView) findViewById(R.id.You);
         imageViewYou.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -170,8 +236,11 @@ public class MainActivity extends Activity {
             }
         });
         
-        
-        requestGraphData(loginResult);
+        // Insert se chi duoc goi khi lan dau tien dung ung dung
+        String strFUID = mySharedPreferencesInfo.getString(ConstantValue.MY_PROFILE_ID, ConstantValue.EMPTY_STRING);
+        if(strFUID == ConstantValue.EMPTY_STRING){
+        	requestGraphData(loginResult);
+        }
         
     }
 
@@ -199,10 +268,68 @@ public class MainActivity extends Activity {
     	
     }
     
+    // Luu fUID tren may user
+	private void saveDataToClient(ProfileInfo inProfile){
+		
+        SharedPreferences.Editor editor = mySharedPreferencesInfo.edit();
+        
+        editor.putString(ConstantValue.MY_PROFILE_ID, inProfile.getFuid());
+        editor.putString(ConstantValue.MY_SEX, inProfile.getUserSex());
+        editor.putInt(ConstantValue.MY_BORN_YEAR, inProfile.getBornYear());
+        
+        editor.commit();
+    }
+    
+    private String buildImageProfileUrlFromUID(String inUID){
+    	if(inUID == null || inUID == ""){
+    		showErrorMessage("inUID is Blank!");
+    		return "";
+    	}
+    	String resultUrl = "https://graph.facebook.com/"+ inUID +"/picture?type=large&width=250&height=250";
+    	return resultUrl;
+    }
+    
+    private void showErrorMessage(String inMessage){
+    	Log.d(TAG, "Message_Error:" + inMessage);
+    }
+    
+    /**
+     * AsyncTask for calling Mobile Assistant API for checking into a place (e.g., a store)
+    */
+    private class ProfileInfoTask extends AsyncTask<Void, Void, Void> {
+
+      /**
+       * Calls appropriate CloudEndpoint to indicate that user checked into a place.
+       *
+       * @param params the place where the user is checking in.
+       */
+      @Override
+      protected Void doInBackground(Void... params) {
+        
+    	Profileinfoendpoint.Builder builder = new Profileinfoendpoint.Builder(
+            AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+            null);
+            
+        builder = CloudEndpointUtils.updateBuilder(builder);
+
+        Profileinfoendpoint endpoint = builder.build();
+        
+        try {
+        	endpoint.insertProfileInfo(profileInfo).execute();
+        } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+
+        return null;
+      }
+    }
+    
+
+    
     // Lay ve nhung thong tin can thiet cua user login
     private void requestGraphData(LoginResult loginResult){
     	Log.d(TAG, "loginResult");
-    	
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -210,7 +337,6 @@ public class MainActivity extends Activity {
                     public void onCompleted(
                             JSONObject object,
                             GraphResponse response) {
-                    	Log.d(TAG, "loginResult: onCompleted");
                     	
                         Log.d(TAG, "object:" + object.toString());
 
@@ -235,6 +361,8 @@ public class MainActivity extends Activity {
                         // User nay ko duoc lay tu upload
                         profileInfo.setIsFromUpload(false);
                         
+                        saveDataToClient(profileInfo);
+                        
                         new ProfileInfoTask().execute();
                         
                     }
@@ -244,160 +372,30 @@ public class MainActivity extends Activity {
         parameters.putString("fields", "id,name,gender,birthday");
         request.setParameters(parameters);
         request.executeAsync();
-        
     }
     
-    private String buildImageProfileUrlFromUID(String inUID){
-    	if(inUID == null || inUID == ""){
-    		showErrorMessage("inUID is Blank!");
-    		return "";
-    	}
-    	String resultUrl = "https://graph.facebook.com/"+ inUID +"/picture?type=large&width=250&height=250";
-    	return resultUrl;
-    }
-    
-    private void showErrorMessage(String inMessage){
-    	Log.d(TAG, "Message_Error:" + inMessage);
-    }
-
-    // Tim kiem nguoi yeu dua vao cac thong tin san co
-    private void findLoveAction(){
-        Log.d(TAG, "Find Love!");
-        
-        // Thuc hien tiep action sau khi ham ben duoi thanh cong
-        new ListOfProfileInfoAsyncRetriever().execute();
-    }
-    
-    /**
-     * AsyncTask for calling Mobile Assistant API for checking into a place (e.g., a store)
-    */
-    private class ProfileInfoTask extends AsyncTask<Void, Void, Void> {
-
-      /**
-       * Calls appropriate CloudEndpoint to indicate that user checked into a place.
-       *
-       * @param params the place where the user is checking in.
-       */
-      @Override
-      protected Void doInBackground(Void... params) {
-        
-    	Profileinfoendpoint.Builder builder = new Profileinfoendpoint.Builder(
-            AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-            null);
-            
-        builder = CloudEndpointUtils.updateBuilder(builder);
-
-        Profileinfoendpoint endpoint = builder.build();
-        
-
-        try {
-        	endpoint.insertProfileInfo(profileInfo).execute();
-        } catch (IOException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-
-        return null;
-      }
-    }
-    
-    /**
-     * AsyncTask for retrieving the list of places (e.g., stores) and updating the
-     * corresponding results list.
-     */
-    private class ListOfProfileInfoAsyncRetriever extends AsyncTask<Void, Void, CollectionResponseProfileInfo> {
-
-      @Override
-      protected CollectionResponseProfileInfo doInBackground(Void... params) {
-
-
-    	Profileinfoendpoint.Builder endpointBuilder = new Profileinfoendpoint.Builder(
-            AndroidHttp.newCompatibleTransport(), new JacksonFactory(), null);
-       
-        endpointBuilder = CloudEndpointUtils.updateBuilder(endpointBuilder);
-
-
-        CollectionResponseProfileInfo result;
-
-        Profileinfoendpoint endpoint = endpointBuilder.build();
-
-        try {
-        	//result = endpoint.listProfileInfo().execute();
-        	result = endpoint.listProfileInfo().setLimit(3).execute();
-        	
-        } catch (IOException e) {
-          Log.d(TAG, "IOException:" + e.getMessage());
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-          result = null;
-        }
-        return result;
-      }
-      
-      @Override
-      protected void onPreExecute(){
-          // ProgressDialog Vinh Hua Quoc
-          barProgressDialog.show();
-          
-          // loadigIcon.setVisibility(View.VISIBLE);
-          // loadingViewAnim.start();
-      }
-      
-      // If you want the UI to wait until the task returns, use a ProgressDialog in the onPreExecute and onPostExecute methods.
-      @Override
-      protected void onPostExecute(CollectionResponseProfileInfo result) {
-    	  if(result == null){
-    		  
-    		  Log.d(TAG, "==List data from server is null==");
-    		  
-    		  // ProgressDialog Vinh Hua Quoc
-              barProgressDialog.hide();
-    		  return;
-    	  }
-    	  listProfileInfo = result.getItems();
-    	  matchLove();
-    	  
-          // ProgressDialog Vinh Hua Quoc
-          barProgressDialog.hide();
-          
-          // loadigIcon.setVisibility(View.GONE);
-          // loadingViewAnim.stop();
-      }
-      
-    }
-    
+    // Random Integer
     private static int randInt(int min, int max) {
-
-        // NOTE: Usually this should be a field rather than a method
-        // variable so that it is not re-seeded every call.
         Random rand = new Random();
-
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
         int randomNum = rand.nextInt((max - min) + 1) + min;
 
         return randomNum;
     }
     
-    private void matchLove(){
-    	Log.d(TAG, "==listProfileInfo.size:" + listProfileInfo.size());
-    	loverIndex = randInt(0, listProfileInfo.size() - 1);
-    	Log.d(TAG, "==loverIndex:" + loverIndex);
-    	Log.d(TAG, "==listProfileInfo:" + listProfileInfo);
-    	
-    	setImageProfileForImageView(listProfileInfo.get(loverIndex).getUrlImageProfile(),(ImageView)findViewById(R.id.Love),1);
-    	// Click on Imageview
-        final ImageView imageViewYou = (ImageView) findViewById(R.id.Love);
-        imageViewYou.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	Log.d(TAG, "show url");
-            	Uri uri = Uri.parse("https://facebook.com/" + listProfileInfo.get(loverIndex).getFuid());
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+    private void showDialog(){
+        // show a dialog notice no image found
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Connection error");
+        builder.setMessage("Check your internet connection and try again.");
+        builder.setPositiveButton("Try again",	new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, permissionNeeds);
             }
         });
-        
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
-
     //====================================//
 
     @Override

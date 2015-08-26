@@ -9,10 +9,13 @@ public class ConstantValue {
     public static final String MY_NAME = "name";
     public static final String MY_BIRTHDAY = "birthday";
     public static final String MY_LOCALE = "locale";
+    public static final String MY_BORN_YEAR = "bornyear";
     
     public static final String LOCAL_VIETNAM = "VN";
     public static final String SEX_MALE = "male";
     public static final String SEX_FEMALE = "female";
+    
+    public static final String EMPTY_STRING = "";
 }
 
 
