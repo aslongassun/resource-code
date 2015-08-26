@@ -1,22 +1,19 @@
 package com.vmcop.simplethird.findlover;
 
-import com.vmcop.simplethird.findlover.EMF;
+import java.util.List;
+
+import javax.annotation.Nullable;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.inject.Named;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 @Api(name = "profileinfoendpoint", namespace = @ApiNamespace(ownerDomain = "vmcop.com", ownerName = "vmcop.com", packagePath = "simplethird.findlover"))
 public class ProfileInfoEndpoint {
@@ -32,22 +29,36 @@ public class ProfileInfoEndpoint {
 	@ApiMethod(name = "listProfileInfo")
 	public CollectionResponse<ProfileInfo> listProfileInfo(
 			@Nullable @Named("cursor") String cursorString,
-			@Nullable @Named("limit") Integer limit) {
+			@Nullable @Named("limit") Integer limit,
+			@Nullable @Named("sextype") String sexType,
+			@Nullable @Named("fromyear") Integer fromYear,
+			@Nullable @Named("toyear") Integer toYear
+			) {
 
 		EntityManager mgr = null;
 		Cursor cursor = null;
 		List<ProfileInfo> execute = null;
-
+		
 		try {
 			mgr = getEntityManager();
+			
 			Query query = mgr
-					.createQuery("select from ProfileInfo as ProfileInfo");
+					.createQuery("SELECT ProfileInfo FROM ProfileInfo as ProfileInfo "
+							+ " WHERE ProfileInfo.userSex = :sexType "
+							+ " AND ProfileInfo.bornYear >= :fromYear "
+							+ " AND ProfileInfo.bornYear <= :toYear");
+			
+			
 			if (cursorString != null && cursorString != "") {
 				cursor = Cursor.fromWebSafeString(cursorString);
 				query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
 			}
 
 			if (limit != null) {
+				query.setParameter(0, sexType);
+				query.setParameter(1, fromYear);
+				query.setParameter(2, toYear);
+				
 				query.setFirstResult(0);
 				query.setMaxResults(limit);
 			}
@@ -57,10 +68,8 @@ public class ProfileInfoEndpoint {
 			if (cursor != null)
 				cursorString = cursor.toWebSafeString();
 
-			// Tight loop for fetching all entities from datastore and accomodate
 			// for lazy fetch.
-			for (ProfileInfo obj : execute)
-				;
+			for (ProfileInfo obj : execute);
 		} finally {
 			mgr.close();
 		}
@@ -69,23 +78,6 @@ public class ProfileInfoEndpoint {
 				.setNextPageToken(cursorString).build();
 	}
 
-	// 2015/08/05 VMCop edit start
-	@SuppressWarnings({ "unchecked" })
-	private List<ProfileInfo> findProfileInfoByFUID(String inFuid) {
-		EntityManager mgr = getEntityManager();
-		List<ProfileInfo> lprofileInfo = new ArrayList<ProfileInfo>();
-		try {
-			Query query = mgr
-					.createQuery("SELECT c FROM ProfileInfo c WHERE c.fuid = :inFuid")
-					.setParameter("inFuid", inFuid);
-			lprofileInfo = (List<ProfileInfo>) query.getResultList();
-		} finally {
-			mgr.close();
-		}
-		return lprofileInfo;
-	}
-	// 2015/08/05 VMCop edit end
-	
 	/**
 	 * This method gets the entity having primary key id. It uses HTTP GET method.
 	 *
@@ -112,33 +104,21 @@ public class ProfileInfoEndpoint {
 	 * @param profileinfo the entity to be inserted.
 	 * @return The inserted entity.
 	 */
-	// 2015/08/05 VMCop edit start
 	@ApiMethod(name = "insertProfileInfo")
 	public ProfileInfo insertProfileInfo(ProfileInfo profileinfo) {
 		EntityManager mgr = getEntityManager();
 		try {
-			/*if (containsProfileInfo(profileinfo)) {
-			throw new EntityExistsException("Object already exists");
-			}*/
-			List<ProfileInfo> listProfileInfo = findProfileInfoByFUID(profileinfo.getFuid());
-			if(listProfileInfo.isEmpty()){
-				mgr.persist(profileinfo);
-			} else {
-				listProfileInfo.get(0).setUserName(profileinfo.getUserName());
-				listProfileInfo.get(0).setUserSex(profileinfo.getUserSex());
-				listProfileInfo.get(0).setBirthday(profileinfo.getBirthday());
-				listProfileInfo.get(0).setBornYear(profileinfo.getBornYear());
-				listProfileInfo.get(0).setUrlImageProfile(profileinfo.getUrlImageProfile());
-				listProfileInfo.get(0).setLocale(profileinfo.getLocale());
-				listProfileInfo.get(0).setIsFromUpload(profileinfo.getIsFromUpload());
-				mgr.persist(listProfileInfo.get(0));
+			/*
+			if (containsProfileInfo(profileinfo)) {
+				throw new EntityExistsException("Object already exists");
 			}
+			*/
+			mgr.persist(profileinfo);
 		} finally {
 			mgr.close();
 		}
 		return profileinfo;
 	}
-	// 2015/08/05 VMCop edit end
 
 	/**
 	 * This method is used for updating an existing entity. If the entity does not

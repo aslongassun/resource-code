@@ -30,6 +30,12 @@ public class ProfileInfo {
     private Integer bornYear;
     // User nay co duoc nho upload hay thong qua login
     private Boolean isFromUpload;
+    // Dia chi tp hien tai
+    private String currentCity;
+    // Random number
+    private Integer randomNum;
+    // Field dung trong tuong lai
+    private String futureField;
     
     public Key getKey() {
         return key;
@@ -90,5 +96,29 @@ public class ProfileInfo {
 
 	public void setIsFromUpload(Boolean isFromUpload) {
 		this.isFromUpload = isFromUpload;
+	}
+
+	public String getCurrentCity() {
+		return currentCity;
+	}
+
+	public void setCurrentCity(String currentCity) {
+		this.currentCity = currentCity;
+	}
+
+	public Integer getRandomNum() {
+		return randomNum;
+	}
+
+	public void setRandomNum(Integer randomNum) {
+		this.randomNum = randomNum;
+	}
+
+	public String getFutureField() {
+		return futureField;
+	}
+
+	public void setFutureField(String futureField) {
+		this.futureField = futureField;
 	}
 }
