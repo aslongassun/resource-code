@@ -160,6 +160,7 @@ public class FrameInput {
 			// Kiem tra file co chua ghi de Start:
 			Path path = Paths.get(csvFilenameOut);
 			Boolean isFileExists = Files.exists(path);
+			Integer numberRecordOfOldFile = 0;
 			if (isFileExists) {
 				inMessageBuilder.append("Over write output file!" + "\n");
 				inMessageBuilder.append(inOutFileName + "\n");
@@ -177,6 +178,7 @@ public class FrameInput {
 				for (String[] row : contentWritedFile) {
 					containsUID.add(row[0]);
 				}
+				numberRecordOfOldFile = contentWritedFile.size();
 				// Kiem tra file co chua ghi de End:
 			} else {
 				inMessageBuilder.append("Create new output file" + "\n");
@@ -261,20 +263,33 @@ public class FrameInput {
 								String.valueOf(true),
 								row[4]
 								});
+					containsUID.add(row[0]);
 					numberOfRecordNew ++;
 				}
+				
+				csvReader.close();
 				
 				inMessageBuilder.append("Record write:" + numberOfRecordNew + "\n");
 			}
 			writer.writeAll(data);
 			
-			Integer recordWrited = Math.max(0, data.size() -1);
+			
+			Integer recordWrited = 0;
+			if(isFileExists){
+				recordWrited = Math.max(0, data.size());
+			} else {
+				recordWrited = Math.max(0, data.size() - 1);
+			}
 			
 			inMessageBuilder.append("-----------------------\n");
 			
 			inMessageBuilder.append("Total new record writed: " + recordWrited + "\n");
 			
-			inMessageBuilder.append("\n=====***COMPLETE***=====\n\n");
+			numberRecordOfOldFile = numberRecordOfOldFile + recordWrited;
+					
+			inMessageBuilder.append("Total record output file: " + numberRecordOfOldFile + "\n");
+			
+			inMessageBuilder.append("=====***COMPLETE***=====\n");
 			
 			writer.close();
 		} catch(Exception ex){
