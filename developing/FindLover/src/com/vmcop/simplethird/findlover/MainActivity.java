@@ -57,8 +57,6 @@ public class MainActivity extends Activity {
 	ProfileInfo profileInfo;
 	
 	List<ProfileInfo> listProfileInfo;
-	
-	Integer loverIndex;
     
 	// ProgressDialog Vinh Hua Quoc
 	ProgressDialog barProgressDialog;
@@ -82,6 +80,7 @@ public class MainActivity extends Activity {
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+            	Log.d(TAG, "Profile Id:" + Profile.getCurrentProfile() );
                 doAfterLoginSuccess(loginResult);
             }
 
@@ -160,11 +159,7 @@ public class MainActivity extends Activity {
 	        	
 	        	Integer bornYear = mySharedPreferencesInfo.getInt(ConstantValue.MY_BORN_YEAR, 0);
 	        	
-	        	Log.d(TAG, "sexType:" + sexType);
-	        	Log.d(TAG, "bornYear:" + bornYear);
-	        	
-	        	result = endpoint.listProfileInfo().setSextype(sexType).setFromyear(1989).setToyear(1996).setLimit(3).execute();
-	        	
+	        	result = endpoint.listProfileInfo().setSextype(sexType).setFromyear(1905).setToyear(2001).setLimit(1).execute();
 	        	
         	} else {
         		showErrorMessage("Profile info data is Empty!");
@@ -194,40 +189,37 @@ public class MainActivity extends Activity {
     	  }
     	  
     	  listProfileInfo = result.getItems();
-    	  
-    	  Log.d(TAG, "==listProfileInfo==" + listProfileInfo);
-    	  
-    	  loverIndex = randInt(0, listProfileInfo.size() - 1);
       	
-      	  setImageProfileForImageView(listProfileInfo.get(loverIndex).getUrlImageProfile(),(ImageView)findViewById(R.id.Love),1);
+    	  if(listProfileInfo == null || listProfileInfo.isEmpty()){
+    		  Log.d(TAG, "==ListProfileInfo data is null|empty==");
+    		  // ProgressDialog Vinh Hua Quoc
+              barProgressDialog.hide();
+    		  return;
+    	  }
+    	  
+      	  setImageProfileForImageView(listProfileInfo.get(0).getUrlImageProfile(),(ImageView)findViewById(R.id.Love),1);
       	  // Click on Imageview
           final ImageView imageViewYou = (ImageView) findViewById(R.id.Love);
           imageViewYou.setOnClickListener(new View.OnClickListener() {
               public void onClick(View v) {
-              	Uri uri = Uri.parse("https://facebook.com/" + listProfileInfo.get(loverIndex).getFuid());
+              	Uri uri = Uri.parse("https://facebook.com/" + listProfileInfo.get(0).getFuid());
                   startActivity(new Intent(Intent.ACTION_VIEW, uri));
               }
           });
     	  
-          // ProgressDialog Vinh Hua Quoc
-          barProgressDialog.hide();
       }
     }
     
     // Thuc hien xu ly sau khi login thanh cong
     private void doAfterLoginSuccess(LoginResult loginResult){
-        Log.d(TAG, "loginResult:" + loginResult);
-        
-        try{
-	        Profile currProfile = Profile.getCurrentProfile();
-	        // Set Image vao ImageView 
-	        setImageProfileForImageView(buildImageProfileUrlFromUID(currProfile.getId()),(ImageView)findViewById(R.id.You),0);
-        } catch(Exception ex){
-        	Log.d(TAG, "Profile set failse:" + ex.getMessage());
-        }
-        
         // Click on Imageview
         final ImageView imageViewYou = (ImageView) findViewById(R.id.You);
+
+        if(Profile.getCurrentProfile() != null){
+        	// Set Image vao ImageView 
+        	setImageProfileForImageView(buildImageProfileUrlFromUID(Profile.getCurrentProfile().getId()), imageViewYou,0);
+        }
+	    
         imageViewYou.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	Log.d(TAG, "show url");
@@ -238,7 +230,8 @@ public class MainActivity extends Activity {
         
         // Insert se chi duoc goi khi lan dau tien dung ung dung
         String strFUID = mySharedPreferencesInfo.getString(ConstantValue.MY_PROFILE_ID, ConstantValue.EMPTY_STRING);
-        if(strFUID == ConstantValue.EMPTY_STRING){
+        if(strFUID.endsWith(ConstantValue.EMPTY_STRING)){
+        	Log.d(TAG, "First time call request:");
         	requestGraphData(loginResult);
         }
         
@@ -247,6 +240,12 @@ public class MainActivity extends Activity {
     // Set Image get tu Url vao ImageView
 	private void setImageProfileForImageView(String imageUrl,final ImageView inImageView,final Integer typeYouAre){
     	
+		// ProgressDialog Vinh Hua Quoc
+		if(typeYouAre == 0){
+			barProgressDialog.setMessage("Loading...");
+			barProgressDialog.show();
+		}
+		
         Picasso.with(MainActivity.this).load(imageUrl).into(inImageView, new Callback() {
             @SuppressLint("NewApi")
 			@Override
@@ -258,11 +257,16 @@ public class MainActivity extends Activity {
             		Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.popup_icon);
         	    	inImageView.setImageBitmap(mBitmap);
             	}
+            	// ProgressDialog Vinh Hua Quoc
+                barProgressDialog.hide();
+                barProgressDialog.setMessage("Finding...");
             }
             
             @Override
             public void onError() {
-
+            	// ProgressDialog Vinh Hua Quoc
+                barProgressDialog.hide();
+                Log.d(TAG, "Load profile image error!");
             }
         });
     	
@@ -365,6 +369,9 @@ public class MainActivity extends Activity {
                         
                         new ProfileInfoTask().execute();
                         
+
+                        // Set Image vao ImageView 
+                        setImageProfileForImageView(buildImageProfileUrlFromUID(profileInfo.getFuid()), (ImageView) findViewById(R.id.You),0);
                     }
                 }
         );
