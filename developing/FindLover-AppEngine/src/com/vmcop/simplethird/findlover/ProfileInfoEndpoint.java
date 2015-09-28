@@ -1,12 +1,16 @@
 package com.vmcop.simplethird.findlover;
 
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
+
+import org.mortbay.log.Log;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -17,7 +21,8 @@ import com.google.appengine.datanucleus.query.JPACursorHelper;
 
 @Api(name = "profileinfoendpoint", namespace = @ApiNamespace(ownerDomain = "vmcop.com", ownerName = "vmcop.com", packagePath = "simplethird.findlover"))
 public class ProfileInfoEndpoint {
-
+	
+	private static final Logger log = Logger.getLogger(ProfileInfoEndpoint.class.getName()); 
 	/**
 	 * This method lists all the entities inserted in datastore.
 	 * It uses HTTP GET method and paging support.
@@ -38,9 +43,24 @@ public class ProfileInfoEndpoint {
 		EntityManager mgr = null;
 		Cursor cursor = null;
 		List<ProfileInfo> execute = null;
+		Integer maxResults = 0;
 		
 		try {
 			mgr = getEntityManager();
+			
+			// Dem so luong record thoa dk
+			Query countQuery = mgr
+					.createQuery("SELECT COUNT(ProfileInfo) FROM ProfileInfo as ProfileInfo "
+							+ " WHERE ProfileInfo.userSex = :sexType "
+							+ " AND ProfileInfo.bornYear >= :fromYear "
+							+ " AND ProfileInfo.bornYear <= :toYear");
+			countQuery.setParameter(0, sexType);
+			countQuery.setParameter(1, fromYear);
+			countQuery.setParameter(2, toYear);
+			
+			maxResults = ((Long)countQuery.getSingleResult()).intValue();
+			
+			log.info("==maxResults==" + maxResults);
 			
 			Query query = mgr
 					.createQuery("SELECT ProfileInfo FROM ProfileInfo as ProfileInfo "
@@ -48,6 +68,7 @@ public class ProfileInfoEndpoint {
 							+ " AND ProfileInfo.bornYear >= :fromYear "
 							+ " AND ProfileInfo.bornYear <= :toYear");
 			
+			log.info("==query==" + query);
 			
 			if (cursorString != null && cursorString != "") {
 				cursor = Cursor.fromWebSafeString(cursorString);
@@ -59,7 +80,8 @@ public class ProfileInfoEndpoint {
 				query.setParameter(1, fromYear);
 				query.setParameter(2, toYear);
 				
-				query.setFirstResult(0);
+				query.setFirstResult(randInt(0,maxResults - 1));
+				
 				query.setMaxResults(limit);
 			}
 
@@ -70,6 +92,8 @@ public class ProfileInfoEndpoint {
 
 			// for lazy fetch.
 			for (ProfileInfo obj : execute);
+			
+			log.info("==execute==" + execute);
 		} finally {
 			mgr.close();
 		}
@@ -77,7 +101,18 @@ public class ProfileInfoEndpoint {
 		return CollectionResponse.<ProfileInfo> builder().setItems(execute)
 				.setNextPageToken(cursorString).build();
 	}
+	
+	// Random Integer
+    private static int randInt(int min, int max) {
+    	if(max <= 0){
+    		return 0;
+    	}
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
 
+        return randomNum;
+    }
+	
 	/**
 	 * This method gets the entity having primary key id. It uses HTTP GET method.
 	 *

@@ -22,16 +22,12 @@ public class ProfileInfo {
 	private String userSex;
     // Sinh nhat
     private String birthday;
-    // Url cua user profile
-    private String urlImageProfile;
     // Quoc gia
     private String locale;
     // Luu nam sinh dang so dung cho query
     private Integer bornYear;
     // User nay co duoc nho upload hay thong qua login
     private Boolean isFromUpload;
-    // Dia chi tp hien tai
-    private String currentCity;
     // Random number
     private Integer randomNum;
     // Field dung trong tuong lai
@@ -52,12 +48,6 @@ public class ProfileInfo {
 	}
 	public void setUserSex(String userSex) {
 		this.userSex = userSex;
-	}
-	public String getUrlImageProfile() {
-		return urlImageProfile;
-	}
-	public void setUrlImageProfile(String urlImageProfile) {
-		this.urlImageProfile = urlImageProfile;
 	}
 	public String getLocale() {
 		return locale;
@@ -96,14 +86,6 @@ public class ProfileInfo {
 
 	public void setIsFromUpload(Boolean isFromUpload) {
 		this.isFromUpload = isFromUpload;
-	}
-
-	public String getCurrentCity() {
-		return currentCity;
-	}
-
-	public void setCurrentCity(String currentCity) {
-		this.currentCity = currentCity;
 	}
 
 	public Integer getRandomNum() {
