@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,13 +24,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
-
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 
 
 public class FrameInput {
@@ -39,6 +41,9 @@ public class FrameInput {
 	private JLabel lblFileOut;
 	private JTextField textOutFileName;
 	private JTextArea textArea;
+	private JRadioButton rdbtnMale;
+	private JRadioButton rdbtnFemale;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -74,7 +79,8 @@ public class FrameInput {
 		JButton btnCreateFile = new JButton("Create File");
 		btnCreateFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				createCSV(textInFolder.getText(), textOutFileName.getText(), msgBuilderStr);
+				createCSV(textInFolder.getText(), textOutFileName.getText(), msgBuilderStr, 
+							rdbtnMale.isSelected(), rdbtnFemale.isSelected() );
 				textArea.setText(msgBuilderStr.toString());
 			}
 		});
@@ -109,10 +115,22 @@ public class FrameInput {
 		scrollPane.setViewportView(textArea);
 		textArea.setBorder(BorderFactory.createLineBorder(Color.decode("#C0C0C0")));
 		
+		rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.setBounds(10, 96, 75, 23);
+		frame.getContentPane().add(rdbtnMale);
+		
+		rdbtnFemale = new JRadioButton("Female");
+		rdbtnFemale.setBounds(87, 96, 84, 23);
+		frame.getContentPane().add(rdbtnFemale);
+		
+		JLabel lblGender = new JLabel("Gender:");
+		lblGender.setBounds(10, 75, 46, 14);
+		frame.getContentPane().add(lblGender);
+		
 		msgBuilderStr = new StringBuilder();
 	}
 	
-	private void createCSV(String inFolder, String inOutFileName, StringBuilder inMessageBuilder) {
+	private void createCSV(String inFolder, String inOutFileName, StringBuilder inMessageBuilder,Boolean rdbtnMaleValue,Boolean rdbtnFemaleValue) {
 		inMessageBuilder.append("=======***LOG***=======\n");
 		
 		File fl = new File(inFolder);
@@ -161,6 +179,8 @@ public class FrameInput {
 			Path path = Paths.get(csvFilenameOut);
 			Boolean isFileExists = Files.exists(path);
 			Integer numberRecordOfOldFile = 0;
+			Integer numberMaleOld = 0;
+			Integer numberFemaleOld = 0;
 			if (isFileExists) {
 				inMessageBuilder.append("Over write output file!" + "\n");
 				inMessageBuilder.append(inOutFileName + "\n");
@@ -177,6 +197,11 @@ public class FrameInput {
 				
 				for (String[] row : contentWritedFile) {
 					containsUID.add(row[0]);
+					if(row[3].equals("male")){
+						numberMaleOld++;
+					} else if (row[3].equals("female")) {
+						numberFemaleOld++;
+					}
 				}
 				numberRecordOfOldFile = contentWritedFile.size();
 				// Kiem tra file co chua ghi de End:
@@ -202,15 +227,29 @@ public class FrameInput {
 						"userName",
 						"userSex",
 						"birthday",
-						"urlImageProfile",
 						"locale",
 						"bornYear",
 						"isFromUpload",
-						"currentCity"
+						"randomNum"
 						}
 						);
 			}
 			
+			String moveFolder = "";
+			String sexCheck = "";
+			if(rdbtnMaleValue){
+				sexCheck = "male";
+				moveFolder = inFolder + "\\backup\\male";
+			} else if(rdbtnFemaleValue){
+				sexCheck = "female";
+				moveFolder = inFolder + "\\backup\\female";
+			} else {
+				sexCheck = "";
+				moveFolder = inFolder + "\\backup";
+			}
+			Integer numberMaleNew = 0;
+			Integer numberFemaleNew = 0;
+			Integer numberRandomIncrease = 0;
 			for(File item : files){
 				inMessageBuilder.append("\nFile: " + item.getName() + "\n");
 				String csvFilenameIn = inFolder + "\\" + item.getName();
@@ -240,13 +279,19 @@ public class FrameInput {
 						continue;
 					}
 					
-					// Skip nhung record khong co nam sinh va ko co gioi tinh
 					String[] birthday = row[5].split(" ");
 					if(birthday.length < 3){
-						continue;
+						birthday = new String[3];
+						birthday[0] = "January";
+						birthday[1] = "01";
+						birthday[2] = "3000";
 					}
 					
-					String currSex = row[6].toLowerCase();
+					// Skip nhung record ko co gioi tinh
+					String currSex = sexCheck;
+					if(sexCheck.equals("")){
+						currSex = row[5].toLowerCase();
+					}
 					if(!currSex.equals("male") && !currSex.equals("female")){
 						continue;
 					}
@@ -257,19 +302,64 @@ public class FrameInput {
 								row[1],  // Name_facebook
 								currSex, // Sex_facebook
 								convertToDay(birthday[1]) + "/" + mapMonth.get(birthday[0]) + "/" + birthday[2],
-								"https://graph.facebook.com/"+ row[0] +"/picture?type=large&width=250&height=250",
+								//"https://graph.facebook.com/"+ row[0] +"/picture?type=large&width=250&height=250",
 								"VN",
 								String.valueOf(birthday[2]),
 								String.valueOf(true),
-								row[4]
+								//row[4],
+								String.valueOf(numberRecordOfOldFile + numberRandomIncrease)
 								});
+					
+					if(currSex.equals("male")){
+						numberMaleNew++;
+					} else if (currSex.equals("female")) {
+						numberFemaleNew++;
+					}
+					
 					containsUID.add(row[0]);
 					numberOfRecordNew ++;
+					numberRandomIncrease ++;
 				}
 				
 				csvReader.close();
 				
-				inMessageBuilder.append("Record write:" + numberOfRecordNew + "\n");
+				inMessageBuilder.append("Record write: " + numberOfRecordNew + "\n");
+				
+				//====Move file==============================
+				
+				
+				
+				
+				
+				File dirMoveFolderCreate = new File(moveFolder);
+				dirMoveFolderCreate.mkdir();
+				try{
+					InputStream inStream = null;
+					OutputStream outStream = null;
+		    	    File bfile =new File(moveFolder + "\\" + item.getName());
+		    		
+		    	    inStream = new FileInputStream(item);
+		    	    outStream = new FileOutputStream(bfile);
+		        	
+		    	    byte[] buffer = new byte[1024];
+		    		
+		    	    int length;
+		    	    //copy the file content in bytes 
+		    	    while ((length = inStream.read(buffer)) > 0){
+		    	  
+		    	    	outStream.write(buffer, 0, length);
+		    	 
+		    	    }
+		    	    inStream.close();
+		    	    outStream.close();
+					
+					item.delete();
+				} catch (Exception ex){
+					inMessageBuilder.append("=====***EXCEPTION***=====\n");
+					inMessageBuilder.append(ex);
+				}
+				
+				//===========================================
 			}
 			writer.writeAll(data);
 			
@@ -289,15 +379,26 @@ public class FrameInput {
 					
 			inMessageBuilder.append("Total record output file: " + numberRecordOfOldFile + "\n");
 			
+			Integer countMale = numberMaleNew + numberMaleOld;
+			
+			inMessageBuilder.append("Total male: " + countMale + "\n");
+			
+			Integer countFemale = numberFemaleNew + numberFemaleOld;
+			
+			inMessageBuilder.append("Total female: " + countFemale + "\n");
+			
+			
 			inMessageBuilder.append("=====***COMPLETE***=====\n");
 			
 			writer.close();
 		} catch(Exception ex){
-			inMessageBuilder.append("=====***EXCEPTION***=====\n\n");
+			inMessageBuilder.append("=====***EXCEPTION***=====\n");
+			inMessageBuilder.append(ex);
 		}
 		
 	}
 	
+	 
 	private String convertToDay(String inDate){
 		inDate = inDate.replace(",", "");
 		if(inDate.length() < 2){
