@@ -65,3 +65,7 @@ transformers:
     - property: isFromUpload
       external_name: isFromUpload
       import_transform: transform.none_if_empty(bool)
+
+    - property: currentCity
+      external_name: currentCity
+      # Type: String Stats: 6 properties of this type in this kind.
