@@ -12,21 +12,23 @@
         android:gravity="center">
 
         <ImageView
+            android:background="@drawable/border_imageview"
             android:id="@+id/You"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="155dp"
+            android:layout_height="155dp"
             android:src="@drawable/profile"
-            android:layout_margin = "7dp"
+            android:layout_margin = "4dp"
             android:clickable="true"
             android:scaleType="fitXY"
             android:contentDescription="@null"/>
 
         <ImageView
+            android:background="@drawable/border_imageview"
             android:id="@+id/Love"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="155dp"
+            android:layout_height="155dp"
             android:src="@drawable/profile"
-            android:layout_margin = "7dp"
+            android:layout_margin = "4dp"
             android:clickable="true"
             android:scaleType="fitXY"
             android:contentDescription="@null"/>
