@@ -16,6 +16,18 @@ public class ConstantValue {
     public static final String SEX_FEMALE = "female";
     
     public static final String EMPTY_STRING = "";
+    // tuoi nguoi yeu chenh lech
+    public static final Integer SELECT_MAX = 2;
+    public static final Integer SELECT_MIN = 7;
+    // ti le lua chon khong theo tuoi
+    public static final Integer SELECT_RATE = 3;
+    // nam sinh mac dinh khi khong co
+    public static final Integer DEFAULT_BORN_YEAR = 3000;
+    
+    //--------------------------------------------------------------//
+    //--------------------CHANGE WHEN UPVERSION---------------------//
+    //--------------------------------------------------------------//
+    public static final Integer RANDOM_MAX_VALUE = 4000;
 }
 
 

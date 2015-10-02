@@ -65,9 +65,10 @@ public class RegisterActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_register);
-
-    Button regButton = (Button) findViewById(R.id.regButton);
-
+    
+    // Button regButton = (Button) findViewById(R.id.regButton);
+    
+    /*
     registerListener = new OnTouchListener() {
       @Override
       public boolean onTouch(View v, MotionEvent event) {
@@ -104,7 +105,7 @@ public class RegisterActivity extends Activity {
         }
       }
     };
-
+    
     unregisterListener = new OnTouchListener() {
       @Override
       public boolean onTouch(View v, MotionEvent event) {
@@ -122,18 +123,38 @@ public class RegisterActivity extends Activity {
     };
 
     regButton.setOnTouchListener(registerListener);
+    */
     
     /*
      * build the messaging endpoint so we can access old messages via an endpoint call
      */
+    
     MessageEndpoint.Builder endpointBuilder = new MessageEndpoint.Builder(
         AndroidHttp.newCompatibleTransport(),
         new JacksonFactory(),
         new HttpRequestInitializer() {
           public void initialize(HttpRequest httpRequest) { }
-        });
-
+    });
+    
     messageEndpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+    
+    
+    updateState(State.REGISTERING);
+    try {
+      GCMIntentService.register(getApplicationContext());
+    } catch (Exception e) {
+      Log.e(RegisterActivity.class.getName(),
+          "Exception received when attempting to register for Google Cloud "
+              + "Messaging. Perhaps you need to set your virtual device's "
+              + " target to Google APIs? "
+              + "See https://developers.google.com/eclipse/docs/cloud_endpoints_android"
+              + " for more information.", e);
+      showDialog("There was a problem when attempting to register for "
+          + "Google Cloud Messaging. If you're running in the emulator, "
+          + "is the target of your virtual device set to 'Google APIs?' "
+          + "See the Android log for more details.");
+      updateState(State.UNREGISTERED);
+    }
   }
 
   @Override
@@ -195,6 +216,11 @@ public class RegisterActivity extends Activity {
       registerButton.setText("Unregister");
       registerButton.setOnTouchListener(unregisterListener);
       registerButton.setEnabled(true);
+      
+      // Vinh Hua Quoc added start
+      this.finish();
+      // Vinh Hua Quoc added end
+      
       break;
 
     case REGISTERING:

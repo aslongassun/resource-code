@@ -180,6 +180,8 @@ public class GCMIntentService extends GCMBaseIntentService {
       return;
     }
 
+    // Vinh Hua Quoc modified start
+    /*
     sendNotificationIntent(
         context,
         "1) Registration with Google Cloud Messaging...SUCCEEDED!\n\n"
@@ -190,8 +192,11 @@ public class GCMIntentService extends GCMBaseIntentService {
             + "To send a message to this device, "
             + "open your browser and navigate to the sample application at "
             + getWebSampleUrl(endpoint.getRootUrl()), false, true);
+    */
+    sendNotificationIntent(context,"", false, true);
+    // Vinh Hua Quoc modified end
   }
-
+  
   /**
    * Called back when the Google Cloud Messaging service has unregistered the
    * device.
