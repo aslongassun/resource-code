@@ -2,6 +2,10 @@ package com.vmcop.simplethird.findlover.util;
 
 import java.util.Random;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+
 import com.vmcop.simplethird.findlover.constant.ConstantValue;
 
 public class SupportFunction {
@@ -24,5 +28,14 @@ public class SupportFunction {
 		int randomNum = rand.nextInt((max - min) + 1) + min;
 
 		return randomNum;
+	}
+	
+	// Overlay bitmap2 len bitmap1 (Phai khac size cua 2 bitmap)
+	public static Bitmap overlayBitmap(Bitmap bmp1, Bitmap bmp2) {
+		Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+		Canvas canvas = new Canvas(bmOverlay);
+		canvas.drawBitmap(bmp1, new Matrix(), null);
+		canvas.drawBitmap(bmp2, bmp1.getWidth() - bmp2.getWidth(), 0, null);
+		return bmOverlay;
 	}
 }

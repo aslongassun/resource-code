@@ -16,12 +16,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +45,7 @@ import com.vmcop.simplethird.findlover.profileinfoendpoint.Profileinfoendpoint;
 import com.vmcop.simplethird.findlover.profileinfoendpoint.model.CollectionResponseProfileInfo;
 import com.vmcop.simplethird.findlover.profileinfoendpoint.model.ProfileInfo;
 import com.vmcop.simplethird.findlover.util.SupportFunction;
+import com.vmcop.simplethird.findlover.util.TransparentProgressDialog;
 
 
 public class MainActivity extends Activity {
@@ -62,10 +62,14 @@ public class MainActivity extends Activity {
 	List<ProfileInfo> listProfileInfo;
 	
 	Bitmap iconPopup;
-	// ProgressDialog Vinh Hua Quoc
-	ProgressDialog barProgressDialog;
 
 	SharedPreferences mySharedPreferencesInfo;
+	
+	// ProgressDialog Vinh Hua Quoc
+	// ProgressDialog barProgressDialog;
+	private TransparentProgressDialog progessDialogPopup;
+	//private Handler h;
+	//private Runnable r;
 	
 	
 	@Override
@@ -104,10 +108,18 @@ public class MainActivity extends Activity {
 		final Button button = (Button) findViewById(R.id.btnFind);
 		
 		// ProgressDialog Vinh Hua Quoc
-		barProgressDialog = new ProgressDialog(MainActivity.this, AlertDialog.THEME_TRADITIONAL);
-		barProgressDialog.setMessage("Finding...");
-		barProgressDialog.setCanceledOnTouchOutside(false);
-		barProgressDialog.hide();
+		
+		// barProgressDialog = new ProgressDialog(MainActivity.this, AlertDialog.THEME_TRADITIONAL);
+		// barProgressDialog.setMessage("Finding...");
+		// barProgressDialog.setCanceledOnTouchOutside(false);
+		// barProgressDialog.hide();
+		
+		//=============NEW============
+		progessDialogPopup = new TransparentProgressDialog(this, R.drawable.spin_loading);
+		//=============================
+		
+		
+		//pd.show();
 		
 		button.setOnClickListener(new View.OnClickListener() { 
 			public void onClick(View v) {
@@ -175,7 +187,8 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute(){
 			// ProgressDialog Vinh Hua Quoc
-			barProgressDialog.show();
+			// barProgressDialog.show();
+			progessDialogPopup.show();
 		}
 		
 		// If you want the UI to wait until the task returns, use a ProgressDialog in the onPreExecute and onPostExecute methods.
@@ -186,7 +199,8 @@ public class MainActivity extends Activity {
 			Log.d(TAG, "==List data from server is null==");
 			
 			// ProgressDialog Vinh Hua Quoc
-			barProgressDialog.hide();
+			// barProgressDialog.hide();
+			progessDialogPopup.dismiss();
 			return;
 		}
 		
@@ -195,7 +209,8 @@ public class MainActivity extends Activity {
 		if(listProfileInfo == null || listProfileInfo.isEmpty()){
 			Log.d(TAG, "==ListProfileInfo data is null|empty==");
 			// ProgressDialog Vinh Hua Quoc
-			barProgressDialog.hide();
+			// barProgressDialog.hide();
+			progessDialogPopup.dismiss();
 			return;
 		}
 		
@@ -237,22 +252,14 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	// Overlay bitmap2 len bitmap1 (Phai khac size cua 2 bitmap)
-	public Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
-		Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-		Canvas canvas = new Canvas(bmOverlay);
-		canvas.drawBitmap(bmp1, new Matrix(), null);
-		canvas.drawBitmap(bmp2, bmp1.getWidth() - bmp2.getWidth(), 0, null);
-		return bmOverlay;
-	}
-	
 	// Set Image get tu Url vao ImageView
 	private void setImageProfileForImageView(String imageUrl,final ImageView inImageView,final Integer typeYouAre){
 		
 		// ProgressDialog Vinh Hua Quoc
 		if(typeYouAre == 0){
-			barProgressDialog.setMessage("Loading...");
-			barProgressDialog.show();
+			//barProgressDialog.setMessage("Loading...");
+			//barProgressDialog.show();
+			progessDialogPopup.show();
 		}
 		
 		Picasso.with(MainActivity.this).load(imageUrl).into(inImageView, new Callback() {
@@ -263,17 +270,19 @@ public class MainActivity extends Activity {
 					
 					Bitmap myBitmap = ((BitmapDrawable)inImageView.getDrawable()).getBitmap();
 					// Bitmap iconPopup = BitmapFactory.decodeResource(getResources(), R.drawable.popup_icon);
-					inImageView.setImageBitmap(overlay(myBitmap, iconPopup));
+					inImageView.setImageBitmap(SupportFunction.overlayBitmap(myBitmap, iconPopup));
 				}
 				// ProgressDialog Vinh Hua Quoc
-				barProgressDialog.hide();
-				barProgressDialog.setMessage("Finding...");
+				//barProgressDialog.hide();
+				//barProgressDialog.setMessage("Finding...");
+				progessDialogPopup.dismiss();
 			}
 			
 			@Override
 			public void onError() {
 				// ProgressDialog Vinh Hua Quoc
-				barProgressDialog.hide();
+				// barProgressDialog.hide();
+				progessDialogPopup.dismiss();
 				Log.d(TAG, "Load profile image error!");
 			}
 		});

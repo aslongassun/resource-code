@@ -27,7 +27,7 @@ public class ConstantValue {
     //--------------------------------------------------------------//
     //--------------------CHANGE WHEN UPVERSION---------------------//
     //--------------------------------------------------------------//
-    public static final Integer RANDOM_MAX_VALUE = 4000;
+    public static final Integer RANDOM_MAX_VALUE = 6000;
 }
 
 

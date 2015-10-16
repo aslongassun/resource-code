@@ -1,0 +1,1 @@
+appcfg.py upload_data --config_file=bulkloader_findlover.yaml --url=http://findloverapp.appspot.com/remote_api --filename OutputFile_row4001_row6000.csv --kind=ProfileInfo -e huaquocvinh@gmail.com
