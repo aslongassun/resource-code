@@ -2054,35 +2054,42 @@ containing a value of this type.
         public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020038;
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020039;
         public static final int abc_textfield_search_material=0x7f02003a;
-        public static final int com_facebook_button_background=0x7f02003b;
-        public static final int com_facebook_button_icon=0x7f02003c;
-        public static final int com_facebook_button_like_background=0x7f02003d;
-        public static final int com_facebook_button_like_icon_selected=0x7f02003e;
-        public static final int com_facebook_button_login_silver_background=0x7f02003f;
-        public static final int com_facebook_button_send_background=0x7f020040;
-        public static final int com_facebook_button_send_icon=0x7f020041;
-        public static final int com_facebook_close=0x7f020042;
-        public static final int com_facebook_profile_picture_blank_portrait=0x7f020043;
-        public static final int com_facebook_profile_picture_blank_square=0x7f020044;
-        public static final int com_facebook_tooltip_black_background=0x7f020045;
-        public static final int com_facebook_tooltip_black_bottomnub=0x7f020046;
-        public static final int com_facebook_tooltip_black_topnub=0x7f020047;
-        public static final int com_facebook_tooltip_black_xout=0x7f020048;
-        public static final int com_facebook_tooltip_blue_background=0x7f020049;
-        public static final int com_facebook_tooltip_blue_bottomnub=0x7f02004a;
-        public static final int com_facebook_tooltip_blue_topnub=0x7f02004b;
-        public static final int com_facebook_tooltip_blue_xout=0x7f02004c;
-        public static final int ic_launcher=0x7f02004d;
-        public static final int messenger_bubble_large_blue=0x7f02004e;
-        public static final int messenger_bubble_large_white=0x7f02004f;
-        public static final int messenger_bubble_small_blue=0x7f020050;
-        public static final int messenger_bubble_small_white=0x7f020051;
-        public static final int messenger_button_blue_bg_round=0x7f020052;
-        public static final int messenger_button_blue_bg_selector=0x7f020053;
-        public static final int messenger_button_send_round_shadow=0x7f020054;
-        public static final int messenger_button_white_bg_round=0x7f020055;
-        public static final int messenger_button_white_bg_selector=0x7f020056;
-        public static final int profile=0x7f020057;
+        public static final int background=0x7f02003b;
+        public static final int border_imageview=0x7f02003c;
+        public static final int button_press=0x7f02003d;
+        public static final int com_facebook_button_background=0x7f02003e;
+        public static final int com_facebook_button_icon=0x7f02003f;
+        public static final int com_facebook_button_like_background=0x7f020040;
+        public static final int com_facebook_button_like_icon_selected=0x7f020041;
+        public static final int com_facebook_button_login_silver_background=0x7f020042;
+        public static final int com_facebook_button_send_background=0x7f020043;
+        public static final int com_facebook_button_send_icon=0x7f020044;
+        public static final int com_facebook_close=0x7f020045;
+        public static final int com_facebook_profile_picture_blank_portrait=0x7f020046;
+        public static final int com_facebook_profile_picture_blank_square=0x7f020047;
+        public static final int com_facebook_tooltip_black_background=0x7f020048;
+        public static final int com_facebook_tooltip_black_bottomnub=0x7f020049;
+        public static final int com_facebook_tooltip_black_topnub=0x7f02004a;
+        public static final int com_facebook_tooltip_black_xout=0x7f02004b;
+        public static final int com_facebook_tooltip_blue_background=0x7f02004c;
+        public static final int com_facebook_tooltip_blue_bottomnub=0x7f02004d;
+        public static final int com_facebook_tooltip_blue_topnub=0x7f02004e;
+        public static final int com_facebook_tooltip_blue_xout=0x7f02004f;
+        public static final int ic_launcher=0x7f020050;
+        public static final int match_button_down=0x7f020051;
+        public static final int match_button_up=0x7f020052;
+        public static final int messenger_bubble_large_blue=0x7f020053;
+        public static final int messenger_bubble_large_white=0x7f020054;
+        public static final int messenger_bubble_small_blue=0x7f020055;
+        public static final int messenger_bubble_small_white=0x7f020056;
+        public static final int messenger_button_blue_bg_round=0x7f020057;
+        public static final int messenger_button_blue_bg_selector=0x7f020058;
+        public static final int messenger_button_send_round_shadow=0x7f020059;
+        public static final int messenger_button_white_bg_round=0x7f02005a;
+        public static final int messenger_button_white_bg_selector=0x7f02005b;
+        public static final int popup_icon=0x7f02005c;
+        public static final int profile=0x7f02005d;
+        public static final int spin_loading=0x7f02005e;
     }
     public static final class id {
         public static final int Love=0x7f0b0062;
@@ -2699,6 +2706,9 @@ containing a value of this type.
          the value of colorAccent, colorPrimary and its variants. 
          */
         public static final int ThemeOverlay_AppCompat_Light=0x7f060105;
+        /**  Transparent dialog 
+         */
+        public static final int TransparentProgressDialog=0x7f060132;
         /**  Styles in here can be extended for customisation in your application. Each utilises
          one of the.styles. If Holo themes are available on the current platform version
          they will be used instead of the compat styles. 
