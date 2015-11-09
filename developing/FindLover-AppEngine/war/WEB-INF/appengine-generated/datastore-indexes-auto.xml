@@ -1,4 +1,7 @@
 <!-- Indices written at Fri, 26 Jun 2015 17:38:50 ICT -->
 
-<datastore-indexes/>
+<datastore-index kind="ProfileInfo" ancestor="false" source="manual">       
+	<property name="userSex" direction="asc"/>      
+	<property name="randomNum" direction="asc"/>
+</datastore-index>
 

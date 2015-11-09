@@ -44,6 +44,14 @@
           "limit" : {
             "type" : "int32",
             "required" : false
+          },
+          "sextype" : {
+            "type" : "string",
+            "required" : false
+          },
+          "randomNum" : {
+            "type" : "int32",
+            "required" : false
           }
         },
         "body" : "empty"
@@ -163,9 +171,6 @@
           "birthday" : {
             "type" : "string"
           },
-          "urlImageProfile" : {
-            "type" : "string"
-          },
           "locale" : {
             "type" : "string"
           },
@@ -174,6 +179,12 @@
           },
           "isFromUpload" : {
             "type" : "boolean"
+          },
+          "randomNum" : {
+            "type" : "integer"
+          },
+          "futureField" : {
+            "type" : "string"
           }
         }
       },

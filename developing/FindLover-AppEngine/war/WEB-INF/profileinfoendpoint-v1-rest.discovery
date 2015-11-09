@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/llVXURxpZ6DnMw4ni_UDRRZ3H8g\"",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/RoqoQaDN-xAkd5l7PdMtPkLNNbM\"",
  "discoveryVersion": "v1",
  "id": "profileinfoendpoint:v1",
  "name": "profileinfoendpoint",
@@ -131,6 +131,9 @@
     "fuid": {
      "type": "string"
     },
+    "futureField": {
+     "type": "string"
+    },
     "isFromUpload": {
      "type": "boolean"
     },
@@ -140,8 +143,9 @@
     "locale": {
      "type": "string"
     },
-    "urlImageProfile": {
-     "type": "string"
+    "randomNum": {
+     "type": "integer",
+     "format": "int32"
     },
     "userName": {
      "type": "string"
@@ -202,6 +206,15 @@
     "limit": {
      "type": "integer",
      "format": "int32",
+     "location": "query"
+    },
+    "randomNum": {
+     "type": "integer",
+     "format": "int32",
+     "location": "query"
+    },
+    "sextype": {
+     "type": "string",
      "location": "query"
     }
    },
