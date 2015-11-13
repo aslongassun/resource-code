@@ -65,6 +65,8 @@ public class MainActivity extends Activity {
 
 	SharedPreferences mySharedPreferencesInfo;
 	
+	Button findButton;
+	
 	// ProgressDialog Vinh Hua Quoc
 	// ProgressDialog barProgressDialog;
 	private TransparentProgressDialog progessDialogPopup;
@@ -87,6 +89,7 @@ public class MainActivity extends Activity {
 		LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
 
 		LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+			
 			@Override
 			public void onSuccess(LoginResult loginResult) {
 				doAfterLoginSuccess(loginResult);
@@ -94,34 +97,23 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onCancel() {
-				showDialog();
+				showDialog("Warning", "Click Try again to continue login!");
 			}
 
 			@Override
 			public void onError(FacebookException exception) {
 				// Toast.makeText(getApplicationContext(), "onError", Toast.LENGTH_SHORT).show();
-				showDialog();
+				showDialog("Error", "Check your internet connection and try again!");
 			}
 		});
-
+		
 		// Click on Button Find
-		final Button button = (Button) findViewById(R.id.btnFind);
-		
+		//final Button button = (Button) findViewById(R.id.btnFind);
+		findButton = (Button) findViewById(R.id.btnFind);
 		// ProgressDialog Vinh Hua Quoc
-		
-		// barProgressDialog = new ProgressDialog(MainActivity.this, AlertDialog.THEME_TRADITIONAL);
-		// barProgressDialog.setMessage("Finding...");
-		// barProgressDialog.setCanceledOnTouchOutside(false);
-		// barProgressDialog.hide();
-		
-		//=============NEW============
 		progessDialogPopup = new TransparentProgressDialog(this, R.drawable.spin_loading);
-		//=============================
 		
-		
-		//pd.show();
-		
-		button.setOnClickListener(new View.OnClickListener() { 
+		findButton.setOnClickListener(new View.OnClickListener() { 
 			public void onClick(View v) {
 				findLoveAction();
 			}
@@ -141,7 +133,7 @@ public class MainActivity extends Activity {
 	// Tim kiem nguoi yeu dua vao cac thong tin san co
 	private void findLoveAction(){
 		Log.d(TAG, "Find Love!");
-		
+		findButton.setBackgroundResource(R.drawable.match_button_down);
 		// Thuc hien tiep action sau khi ham ben duoi thanh cong
 		new ListOfProfileInfoAsyncRetriever().execute();
 	}
@@ -266,22 +258,28 @@ public class MainActivity extends Activity {
 			@SuppressLint("NewApi")
 			@Override
 			public void onSuccess() {
-				if(typeYouAre == 1){
-					
-					Bitmap myBitmap = ((BitmapDrawable)inImageView.getDrawable()).getBitmap();
-					// Bitmap iconPopup = BitmapFactory.decodeResource(getResources(), R.drawable.popup_icon);
-					inImageView.setImageBitmap(SupportFunction.overlayBitmap(myBitmap, iconPopup));
+				try {
+					if(typeYouAre == 1){
+						
+						Bitmap myBitmap = ((BitmapDrawable)inImageView.getDrawable()).getBitmap();
+						// Bitmap iconPopup = BitmapFactory.decodeResource(getResources(), R.drawable.popup_icon);
+						inImageView.setImageBitmap(SupportFunction.overlayBitmap(myBitmap, iconPopup));
+					}
+					// ProgressDialog Vinh Hua Quoc
+					findButton.setBackgroundResource(R.drawable.match_button_up);
+					progessDialogPopup.dismiss();
 				}
-				// ProgressDialog Vinh Hua Quoc
-				//barProgressDialog.hide();
-				//barProgressDialog.setMessage("Finding...");
-				progessDialogPopup.dismiss();
+				catch(Exception ex){
+					findButton.setBackgroundResource(R.drawable.match_button_up);
+					progessDialogPopup.dismiss();
+				}
 			}
 			
 			@Override
 			public void onError() {
 				// ProgressDialog Vinh Hua Quoc
 				// barProgressDialog.hide();
+				findButton.setBackgroundResource(R.drawable.match_button_up);
 				progessDialogPopup.dismiss();
 				Log.d(TAG, "Load profile image error!");
 			}
@@ -397,11 +395,13 @@ public class MainActivity extends Activity {
 		request.executeAsync();
 	}
 	
-	private void showDialog(){
+	private void showDialog(String inTitle, String inMessage){
 		// show a dialog notice no image found
 		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setTitle("Connection error");
-		builder.setMessage("Check your internet connection and try again.");
+		builder.setTitle(inTitle);
+		builder.setMessage(inMessage);
+		/*builder.setTitle("Connection error");
+		builder.setMessage("Check your internet connection and try again.");*/
 		builder.setPositiveButton("Try again",	new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

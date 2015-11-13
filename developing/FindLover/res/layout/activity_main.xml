@@ -44,10 +44,14 @@
 
         <Button
             android:id="@+id/btnFind"
+            android:layout_marginTop="10dp"
             android:layout_width="125dp"
             android:layout_height="102dp"
-            android:text="@null"
-            android:background="@drawable/button_press" />
+            android:background="@drawable/match_button_up"
+            android:text="@null" />
+
+            <!-- android:background="@drawable/button_press" /> -->
+            
     </LinearLayout>
 	
 

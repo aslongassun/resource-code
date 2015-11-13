@@ -38,10 +38,10 @@ public class TransparentProgressDialog extends Dialog {
 	public void show() {
 		super.show();
 		
-		RotateAnimation anim = new RotateAnimation(0.0f, 360.0f , Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
+		RotateAnimation anim = new RotateAnimation(360f, 0f , Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
 		anim.setInterpolator(new LinearInterpolator());
 		anim.setRepeatCount(Animation.INFINITE);
-		anim.setDuration(700);
+		anim.setDuration(1000);
 		iv.setAnimation(anim);
 		iv.startAnimation(anim);
 
